@@ -115,3 +115,17 @@ button:hover {
     margin-bottom: 40px;
     text-align: center;
 }
+
+.container {
+  width: 100%;
+  padding-left: 35%;
+}
+
+/* home page style */
+#searchCont {
+  height: 150px;
+}
+#searchbar {
+  margin-top: 5%;
+  width: 70%;
+}
