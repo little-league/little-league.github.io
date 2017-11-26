@@ -10,6 +10,7 @@
   <script src="js/jquery.min.js"></script>
   <script src="js/d3.v3.min.js" charset="utf-8"></script>
   <script src="js/radar.js"></script>
+  <script src="js/tree.js"></script>
   <script src="js/modernizr.custom.js"></script>
   <script src="js/firebasejs/firebase-app.js"></script>
   <script src="js/firebasejs/firebase-auth.js"></script>
@@ -31,19 +32,6 @@
 </head>
 
 <body cz-shortcut-listen="true">
-
-  <!-- SEARCH PAGE -->
-  <!-- list of words ? -->
-  <div class="codrops-top clearfix">
-    <span class="right" id="go-to-training" data-animation="1">Training</span>
-  </div>
-
-  <!-- TREE PAGE -->
-  <!-- http://mbostock.github.io/d3/talk/20111018/tree.html -->
-  <!-- http://vizuly.io/product/weighted-tree/?demo=d3js -->
-
-  <!-- TRAINING PAGE -->
-  <div id="training-chart" class="clearfix"></div>
   <!-- https://algobeans.com/2015/06/01/you-are-who-you-like/ -->
   <!-- https://www.visualcinnamon.com/2015/10/different-look-d3-radar-chart.html -->
 
@@ -54,28 +42,45 @@
   <!-- 2 columns -->
   <!-- video, checkboxes-->
 
-
   <div id="pt-main" class="pt-perspective">
     <!-- HOME PAGE -->
     <div class="pt-page pt-page-1">
+      <div class="codrops-top clearfix">
+        <span class="right" id="go-to-training" data-animation="1">Training</span>
+      </div>
       <!-- search bar -->
       <div class="container" id="searchCont">
         <input type="text" id="searchbar" placeholder="Search for a skill or exercise"></input>
+        <button id="searchBtn" value="Search">Search</button>
       </div>
       <!-- list of trainings -->
-      <div class="container">
+      <div class="container" id="trainingListCont">
         <h3>List of trainings</h3>
         <ul id="trainings-list"></ul>
       </div>
+
+      <!-- list of related words -->
+      <div class="container" id="searchResultsCont">
+        <ul id="search-results"></ul>
+      </div>
+
+      <!-- tree -->
+      <div class="container" id="treeCont"></div>
     </div>
 
-    <div class="pt-page pt-page-2"><h1><span>A collection of</span><strong>Page</strong> Transitions</h1></div>
-    <div class="pt-page pt-page-3"><h1><span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+    <div class="pt-page pt-page-2">
+      <!-- TRAINING PAGE -->
+      <div class="codrops-top clearfix">
+        <span class="left" id="go-to-planning" data-animation="2">Planning</span>
+      </div>
+
+      <div id="training-chart" class="clearfix"></div>
+    </div>
   </div>
 
   <script src="js/database.js"></script>
   <script src="js/trainings.js"></script>
-  <!-- script type="text/javascript" src="js/main.js"></script -->
+  <script src="js/main.js"></script>
   <script src="js/pagetransitions.js"></script>
 
 </body>

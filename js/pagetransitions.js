@@ -33,6 +33,11 @@ var PageTransitions = (function() {
 			animcursor = 1;
 			nextPage( animcursor );
 		} );
+
+		$('#go-to-planning').on( 'click', function() {
+			animcursor = 2;
+			nextPage( animcursor );
+		} );
 	}
 
 	function nextPage(options ) {
