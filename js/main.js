@@ -42,9 +42,11 @@ function searchElement(elmt) {
   relatedKey = Object.keys(exercises)[ex.indexOf(elmt.toLowerCase())];
 
   $('#trainingListCont').hide();
+  $('#treeCont').hide();
   $('#searchResultsCont').show();
 
   // data-attr: exercise or cf
+  $('#search-results').empty();
   $('#search-results').append(
     $('<li>').append(
       $('<span>').attr('class', 'word').attr('data-id', relatedKey).text(relatedEx)
@@ -60,6 +62,8 @@ function searchElement(elmt) {
 }
 
 function populateTree(rootId, rootText) {
+  TreeGraph.clear();
+  
   var cf = rel_cf_ex[rootId];
   cf = cf.split(',');
   var cf_children = [];
