@@ -1,6 +1,7 @@
-var radarData;
-var dataset;
-var keyword;
+// var radarData;
+// var dataset;
+// var keyword;
+$('#go-to-training').css('display', 'none');
 
 function getColor (d) {
   if (d == "1990-1994" )
@@ -18,7 +19,6 @@ function getColor (d) {
 }
 
 /******* Search page *******/
-
 $('#searchbar').keypress(function(e) {
   if(e.keyCode === 13) {
     searchElement($('#searchbar').val()); 
@@ -31,15 +31,14 @@ $('#searchBtn').click(function() {
 
 function searchElement(elmt) {
   var ex = Object.values(exercises);
-  var relatedEx;
+  var relatedEx = [];
   for(var i = 0; i < ex.length; ++i) {
     ex[i] = ex[i].toLowerCase();
+    if(ex[i].indexOf(elmt.toLowerCase()) != -1)
+      relatedEx.push(ex[i]);
   }
-  if(ex.indexOf(elmt.toLowerCase()) == -1)
+  if(relatedEx.length == 0)
     return;
-
-  relatedEx = Object.values(exercises)[ex.indexOf(elmt.toLowerCase())];
-  relatedKey = Object.keys(exercises)[ex.indexOf(elmt.toLowerCase())];
 
   $('#trainingListCont').hide();
   $('#treeCont').hide();
@@ -47,17 +46,22 @@ function searchElement(elmt) {
 
   // data-attr: exercise or cf
   $('#search-results').empty();
-  $('#search-results').append(
-    $('<li>').append(
-      $('<span>').attr('class', 'word').attr('data-id', relatedKey).text(relatedEx)
-    )
-  )
-
+  for(var i = 0; i < relatedEx.length; ++i) {
+    var key = Object.keys(exercises)[ex.indexOf(relatedEx[i])];
+    $('#search-results').append(
+      $('<li>').append(
+        $('<span>').attr('class', 'word').attr('data-id', key).text(relatedEx[i])
+      )
+    ) 
+  }
+  
   $('.word').click(function() {
     $('#searchResultsCont').hide();
     $('#treeCont').show();
+    $('#go-to-training').css('display', 'block');
 
     populateTree($(this).attr('data-id'), $(this).text());
+    drawRadarChart();
   });
 }
 
@@ -76,6 +80,26 @@ function populateTree(rootId, rootText) {
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
 
+function drawRadarChart() {
+  var axes = Object.values(cognFunc);
+  var radarData = [];
+  radarData[0] = [];
+  for(var i = 0; i < axes.length; ++i) {
+    // TODO: for all exercises
+    radarData[0].push({axis: axes[i], value: 1});
+  }
+
+  var options = {
+    w: 350,
+    h: 350,
+    maxValue: 5,
+    levels: 5,
+    TranslateX: 100,
+    TranslateY: 45
+  }
+
+  RadarChart.draw("#training-chart", radarData, options);
+}
 
 /******* Radar Charts *******/
 // function getRadarData(d) {

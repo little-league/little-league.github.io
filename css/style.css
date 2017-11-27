@@ -117,6 +117,7 @@ button:hover {
 .container {
   width: 100%;
   padding-left: 25%;
+  padding-top: 5%;
 }
 li a {
   color: #fbf111;
@@ -134,9 +135,6 @@ li a:hover {
   padding-top: 10%;
   height: 10%;
 }
-#trainingListCont, #searchResultsCont {
-  padding-top: 5%;
-}
 #searchbar {
   width: 40%;
   height: 30%;
@@ -152,6 +150,9 @@ span.word:hover {
 ul#search-results {
   list-style: none;
 }
+#search-results li {
+  padding: 1%;
+}
 #search-results li span {
   border: 1px solid white;
   padding: .5% 3% .5% 3%;
@@ -160,6 +161,9 @@ ul#search-results {
 /************************************************
  * tree section
  ************************************************/
+ #treeCont {
+  padding-top: 0%;
+ }
 .node {
   cursor: pointer;
 }
@@ -175,6 +179,17 @@ ul#search-results {
   fill: none;
   stroke: #fff;
   stroke-width: 1%;
+}
+
+/************************************************
+ * training section
+ ************************************************/
+#training-page h3 {
+  width: 40%;
+  text-align: center;
+}
+#training-chart {
+  padding-top: 3%;
 }
 
 /***************************************************************
@@ -203,9 +218,17 @@ ul#search-results {
   background: rgba(255,255,255,0.2);
 }
 
+.codrops-top span {
+  cursor: pointer;
+}
+
 .codrops-top span.right {
   float: right;
   margin-right: 1%;
+}
+
+.codrops-top span.left {
+  margin-left: 1%;
 }
 
 .codrops-top span.right a {
