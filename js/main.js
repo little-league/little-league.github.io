@@ -80,13 +80,18 @@ function populateTree(rootId, rootText) {
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
 
-function drawRadarChart() {
-  var axes = Object.values(cognFunc);
-  var radarData = [];
-  radarData[0] = [];
-  for(var i = 0; i < axes.length; ++i) {
-    // TODO: for all exercises
-    radarData[0].push({axis: axes[i], value: 1});
+function drawRadarChart(data) {
+  var radarData;
+  if(!data) {
+    var axes = Object.values(cognFunc);
+    radarData = [];
+    radarData[0] = [];
+    for(var i = 0; i < axes.length; ++i) {
+      // TODO: for all exercises
+      radarData[0].push({axis: axes[i], value: 1});
+    }
+  } else {
+    radarData = data;
   }
 
   var options = {

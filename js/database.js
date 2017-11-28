@@ -16,3 +16,7 @@ var exercises = firebase.database().ref('exercises').on('value', function(data) 
 var rel_cf_ex = firebase.database().ref('rel_cf_ex').on('value', function(data) {
 	rel_cf_ex = data.val();
 });
+
+var rel_tr_ex = firebase.database().ref('rel_tr_ex').on('value', function(data) {
+	rel_tr_ex = data.val();
+});
