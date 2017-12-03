@@ -11,34 +11,13 @@ function addListItem(parent, link, text){
     )
   );
 
-  $('.training').on('click', function() {
+  $('.training').on('click', function(event) {
+    createRadarData($(this).attr('data-id'));
+    drawRadarChart();
+    createRadarFilters($(this).attr('data-id'));
+
   	animcursor = 1;
   	PageTransitions.nextPage( animcursor );
-
-  	var relEx = rel_tr_ex[$(this).attr('data-id')];
-  	relEx = relEx.split(',');
-
-  	var cfVal = [];
-  	for(var i = 0; i < relEx.length; ++i) {
-  		var cf = rel_cf_ex[relEx[i]];
-  		cf = cf.split(',');
-  		for(var j = 0; j < cf.length; ++j) {
-  			if(cfVal[cf[j]])
-  				cfVal[cf[j]] += 1;
-  			else
-  				cfVal[cf[j]] = 1;
-  		}
-  	}
-  	
-  	var axes = Object.values(cognFunc);
-  	var axesKey = Object.keys(cognFunc);
-  	var radarData = [];
-	  radarData[0] = [];
-	  for(var i = 0; i < axes.length; ++i) {
-	  	var val = cfVal[axesKey[i]] ? cfVal[axesKey[i]] : 0;
-	    radarData[0].push({axis: axes[i], value: val});
-	  }
-
-  	drawRadarChart(radarData);
+    $('#sidebar').removeClass('right').addClass('left').css('display', 'block');
   });
 }

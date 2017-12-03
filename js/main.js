@@ -1,6 +1,6 @@
-// var radarData;
-// var dataset;
-// var keyword;
+var radarData = [], cfVal = [];
+
+$('#sidebar').css('display', 'none');
 $('#go-to-training').css('display', 'none');
 
 function getColor (d) {
@@ -59,8 +59,10 @@ function searchElement(elmt) {
     $('#searchResultsCont').hide();
     $('#treeCont').show();
     $('#go-to-training').css('display', 'block');
+    $('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 
     populateTree($(this).attr('data-id'), $(this).text());
+    createRadarData();
     drawRadarChart();
   });
 }
@@ -80,19 +82,10 @@ function populateTree(rootId, rootText) {
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
 
-function drawRadarChart(data) {
-  var radarData;
-  if(!data) {
-    var axes = Object.values(cognFunc);
-    radarData = [];
-    radarData[0] = [];
-    for(var i = 0; i < axes.length; ++i) {
-      // TODO: for all exercises
-      radarData[0].push({axis: axes[i], value: 1});
-    }
-  } else {
-    radarData = data;
-  }
+function drawRadarChart() {
+  var axes = Object.values(cognFunc);
+  var axesKey = Object.keys(cognFunc);
+  radarData[0] = [];
 
   var options = {
     w: 350,
@@ -103,7 +96,60 @@ function drawRadarChart(data) {
     TranslateY: 45
   }
 
+  for(var i = 0; i < axes.length; ++i) {
+    var val = cfVal[axesKey[i]] ? cfVal[axesKey[i]] : 0;
+    radarData[0].push({axis: axes[i], value: val});
+  }
+
   RadarChart.draw("#training-chart", radarData, options);
+}
+
+function createRadarData(dataId) {
+  cfVal = [];
+
+  if(dataId) {
+    // get all exercises saved in training
+    var relEx = rel_tr_ex[dataId].split(',');
+    for(var i = 0; i < relEx.length; ++i) {
+      // get all cognitive functions to each exercises
+      var cf = rel_cf_ex[relEx[i]].split(',');
+      // accumulate cognitive functions
+      for(var j = 0; j < cf.length; ++j) {
+        if(cfVal[cf[j]])
+          cfVal[cf[j]] += 1;
+        else
+          cfVal[cf[j]] = 1;
+      }
+    }  
+  }
+}
+
+function createRadarFilters(dataId) {
+  $('#training-filters-list').empty();
+
+  // get all exercises saved in training
+  var relEx = rel_tr_ex[dataId].split(',');
+  for(var i = 0; i < relEx.length; ++i) {
+    $('#training-filters-list').append(
+      $('<li>').append(
+        $('<input>').attr('type', 'checkbox').attr('class', 'filterbox').attr('data-id', relEx[i]).prop('checked', true)
+      ).append(
+        $('<span>').attr('class', 'filtertext').attr('data-id', relEx[i]).text(exercises[relEx[i]])
+      )
+    );
+  }
+
+  $('.filterbox').click(function() {
+    var id = $(this).attr('data-id');
+    var cf = rel_cf_ex[id].split(',');
+
+    for(var i = 0; i < cf.length; ++i) {
+      cfVal[cf[i]] += $(this).prop('checked') ? 1 : -1;
+    }
+
+    // update radar chart depending on checked exercises
+    drawRadarChart();
+  });
 }
 
 /******* Radar Charts *******/

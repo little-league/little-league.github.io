@@ -69,6 +69,7 @@ var TreeGraph = {
           .style("fill", function(d) { return d._children ? "#aaa" : "#000"; });
 
       nodeEnter.append("text")
+          .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf" })
           .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
           .attr("dy", ".35em")
           .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })

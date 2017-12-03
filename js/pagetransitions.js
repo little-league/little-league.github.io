@@ -32,11 +32,13 @@ var PageTransitions = (function() {
 		$('#go-to-training').on( 'click', function() {
 			animcursor = 1;
 			nextPage( animcursor );
+			$('#sidebar').removeClass('right').addClass('left').css('display', 'block');
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
 			animcursor = 2;
 			nextPage( animcursor );
+			$('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 		} );
 	}
 
@@ -285,63 +287,6 @@ var PageTransitions = (function() {
 			// 	outClass = 'pt-page-moveToTopFade';
 			// 	inClass = 'pt-page-rotateUnfoldBottom';
 			// 	break;
-			// case 54:
-			// 	outClass = 'pt-page-rotateRoomLeftOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateRoomLeftIn';
-			// 	break;
-			// case 55:
-			// 	outClass = 'pt-page-rotateRoomRightOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateRoomRightIn';
-			// 	break;
-			// case 56:
-			// 	outClass = 'pt-page-rotateRoomTopOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateRoomTopIn';
-			// 	break;
-			// case 57:
-			// 	outClass = 'pt-page-rotateRoomBottomOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateRoomBottomIn';
-			// 	break;
-			// case 58:
-			// 	outClass = 'pt-page-rotateCubeLeftOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCubeLeftIn';
-			// 	break;
-			// case 59:
-			// 	outClass = 'pt-page-rotateCubeRightOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCubeRightIn';
-			// 	break;
-			// case 60:
-			// 	outClass = 'pt-page-rotateCubeTopOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCubeTopIn';
-			// 	break;
-			// case 61:
-			// 	outClass = 'pt-page-rotateCubeBottomOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCubeBottomIn';
-			// 	break;
-			// case 62:
-			// 	outClass = 'pt-page-rotateCarouselLeftOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCarouselLeftIn';
-			// 	break;
-			// case 63:
-			// 	outClass = 'pt-page-rotateCarouselRightOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCarouselRightIn';
-			// 	break;
-			// case 64:
-			// 	outClass = 'pt-page-rotateCarouselTopOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCarouselTopIn';
-			// 	break;
-			// case 65:
-			// 	outClass = 'pt-page-rotateCarouselBottomOut pt-page-ontop';
-			// 	inClass = 'pt-page-rotateCarouselBottomIn';
-			// 	break;
-			// case 66:
-			// 	outClass = 'pt-page-rotateSidesOut';
-			// 	inClass = 'pt-page-rotateSidesIn pt-page-delay200';
-			// 	break;
-			// case 67:
-			// 	outClass = 'pt-page-rotateSlideOut';
-			// 	inClass = 'pt-page-rotateSlideIn';
-			// 	break;
-
 		}
 
 		$currPage.addClass( outClass ).on( animEndEventName, function() {
@@ -363,7 +308,6 @@ var PageTransitions = (function() {
 		if( !support ) {
 			onEndAnimation( $currPage, $nextPage );
 		}
-
 	}
 
 	function onEndAnimation( $outpage, $inpage ) {

@@ -29,8 +29,6 @@ text {
   fill: white;
 }
 
-
-
 .group:after {
   content: "";
   display: table;
@@ -38,11 +36,9 @@ text {
 }
 
 /* Document styling */
-
 #wrapper {
    position: relative;
 }
-
 
 #title {
   font-size: 24px;
@@ -120,12 +116,11 @@ button:hover {
   padding-top: 5%;
 }
 li a {
-  color: #fbf111;
   text-decoration: none;
   cursor: pointer;
 }
 li a:hover {
-  text-decoration: underline;
+  color: #fbf111;
 }
 
 /***************************************************************
@@ -158,6 +153,24 @@ ul#search-results {
   padding: .5% 3% .5% 3%;
 }
 
+/***************************************************************
+* sidebar style 
+****************************************************************/
+#sidebar {
+  position: fixed;
+  top: 0%;
+  width: 15%;
+  height: 100%;
+  overflow: hidden;
+}
+#sidebar.left {
+  left: 0%;
+  border-right: .5px solid white;
+}
+#sidebar.right {
+  right: 0%;
+  border-left: .5px solid white;
+}
 /************************************************
  * tree section
  ************************************************/
@@ -172,8 +185,8 @@ ul#search-results {
   font-weight: 100;
   stroke: #fff;
 }
-.node--leaf {
-  fill: #fbf111;
+text.node--leaf:hover {
+  stroke: #fbf111;
 }
 .link {
   fill: none;
@@ -191,12 +204,23 @@ ul#search-results {
 #training-chart {
   padding-top: 3%;
 }
-
+#training-filters-cont {
+  width: 20%;
+  position: fixed;
+  right: 5%;
+  top: 10%;
+  border: 1px solid white;
+}
+#training-filters-list {
+  list-style-type: none;
+}
+.filterbox {
+  margin-right: 5%;
+}
 /***************************************************************
 * Codrops Header Style
 ****************************************************************/
 .codrops-top {
-  background: #26292E;
   text-transform: uppercase;
   position: fixed;
   width: 100%;

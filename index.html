@@ -36,7 +36,9 @@
   <!-- https://www.visualcinnamon.com/2015/10/different-look-d3-radar-chart.html -->
 
   <!-- SIDE BAR -->
-  <!-- list of exercises -->
+  <div id="sidebar" class="right">
+    <ul id="selected-exercises"></ul>
+  </div>
 
   <!-- EXERCISE PAGE -->
   <!-- 2 columns -->
@@ -77,7 +79,9 @@
       <div class="container" id="training-page">
         <h3>Training Session</h3>
         <div id="training-chart" class="clearfix"></div>
-        <div id="training-filters">
+        <div id="training-filters-cont">
+          <ul id="training-filters-list">
+          </ul>
         </div>
       </div>
     </div>
