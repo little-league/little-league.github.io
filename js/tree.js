@@ -3,7 +3,7 @@ var TreeGraph = {
   draw: function(container, width, height, data) {
     var tree, root;
 
-    var margin = {top: 0, right: 100, bottom: 100, left: 100},
+    var margin = {top: 0, right: 150, bottom: 100, left: 100},
       width = width,
       height = height;
 
@@ -20,7 +20,7 @@ var TreeGraph = {
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.right + "," + margin.top + ")");
 
     var xScale = d3.scale.linear()
                 .domain([0,5])
@@ -63,6 +63,15 @@ var TreeGraph = {
           .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
           .on("click", click);
 
+      nodeEnter.append("rect")
+          .attr("class", "nodebox")
+          .attr("x", function(d) { return d.children || d._children ? -105 : 10; })
+          .attr("y", -20)
+          .attr("width", function(d) { return d.children || d._children ? 100 : 160; })
+          .attr("height", 40)
+          .style("fill", "none")
+          .style("stroke", "#fff");
+
       nodeEnter.append("circle")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf"; })
           .attr("r", 1)
@@ -70,12 +79,35 @@ var TreeGraph = {
 
       nodeEnter.append("text")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf" })
-          .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+          .attr("x", function(d) { return d.children || d._children ? -15 : 15; })
           .attr("dy", ".35em")
           .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
           .text(function(d) { return d.name; })
-          .style("fill-opacity", 1e-6)
-          .style("font-size", function(d) { return d.size; });
+          .style("fill-opacity", 1e-6);
+
+      // UGLY IMPLEMENTATION OF INFO BOX "I"
+      nodeEnter.each(function(d) {
+        //TODO: remove later when third level of tree
+        if(!(d.children || d._children))
+          return;
+        
+        // TODO: info image instead
+        d3.select(this).append("text")
+            .attr("class", "textinfo")
+            .attr("x", function(d) { return -20 - d.name.length * 8; })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "end")
+            .text("i")
+            .on('click', function(d) {
+              event.stopPropagation();
+              createExercisePage(d.id);
+
+              // TODO: page order
+              animcursor = 1;
+              PageTransitions.nextPage( animcursor );
+              $('#sidebar').css('display', 'none');
+            });
+      })
 
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
@@ -86,7 +118,6 @@ var TreeGraph = {
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf"; })
           .attr("r", function(d) { return d._children ? 7 : 5; })
           .style("fill", function(d) { return d._children ? "#aaa" : "#000"; });
-
 
       nodeUpdate.select("text")
           .style("fill-opacity", 1);

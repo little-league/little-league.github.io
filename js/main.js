@@ -1,7 +1,10 @@
+/******* Global variables *******/
+var exerciseId;
+/******* Radar chart variables *******/
 var radarData = [], cfVal = [];
 
 $('#sidebar').css('display', 'none');
-$('#go-to-training').css('display', 'none');
+// $('#go-to-training').css('display', 'none');
 
 function getColor (d) {
   if (d == "1990-1994" )
@@ -61,7 +64,8 @@ function searchElement(elmt) {
     $('#go-to-training').css('display', 'block');
     $('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 
-    populateTree($(this).attr('data-id'), $(this).text());
+    exerciseId = $(this).attr('data-id');
+    populateTree(exerciseId, $(this).text());
     createRadarData();
     drawRadarChart();
   });
@@ -74,10 +78,10 @@ function populateTree(rootId, rootText) {
   cf = cf.split(',');
   var cf_children = [];
   for(var i = 0; i < cf.length; ++i) {
-    cf_children[i] = {'name': cognFunc[cf[i]]};
+    cf_children[i] = {'name': cognFunc[cf[i]], 'id': cf[i]};
   }
 
-  var data = {'name': rootText, 'children': cf_children};
+  var data = {'name': rootText, 'id': rootId, 'children': cf_children};
 
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
@@ -150,6 +154,24 @@ function createRadarFilters(dataId) {
     // update radar chart depending on checked exercises
     drawRadarChart();
   });
+}
+
+function createExercisePage(exId) {
+  $('.video-filters-list').empty();
+
+  $('#exercise-name').text(exercises[exId]);
+
+  // populate checkbox filters for videos
+  var relCf = rel_cf_ex[exId].split(',');
+  for(var i = 0; i < relCf.length; ++i) {
+    $('.video-filters-list').append(
+      $('<li>').append(
+        $('<input>').attr('type', 'checkbox').attr('class', 'filterbox').attr('data-id', relCf[i]).prop('checked', true)
+      ).append(
+        $('<span>').attr('class', 'filtertext').attr('data-id', relCf[i]).text(cognFunc[relCf[i]])
+      )
+    );
+  }
 }
 
 /******* Radar Charts *******/
