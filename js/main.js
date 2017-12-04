@@ -1,9 +1,6 @@
-var selectedExList = [];
-/******* Radar chart variables *******/
-var radarData = [], cfVal = [];
+var selectedExList = [], radarData = [], cfVal = [];
 
-$('#sidebar').css('display', 'none');
-// $('#go-to-training').css('display', 'none');
+
 
 // function getColor (d) {
 //   if (d == "1990-1994" )
@@ -19,8 +16,28 @@ $('#sidebar').css('display', 'none');
 //   else
 //     return "steelblue";
 // }
+/*************************************************
+* GLOBAL STATE
+**************************************************/
+function init() {
+  $('#sidebar').css('display', 'none');
+  $('#go-to-planning').css('display', 'none');
+  $('#go-to-training').css('display', 'none');
+}
 
-/******* Search page *******/
+function showBackButton() {
+  $('#go-to-planning').css('display', 'block');
+  $('#go-to-training').css('display', 'none');
+}
+
+function showTrainingButton() {
+  $('#go-to-planning').css('display', 'none');
+  $('#go-to-training').css('display', 'block');
+}
+
+/*************************************************
+* SEARCH PAGE
+**************************************************/
 $('#searchbar').keypress(function(e) {
   if(e.keyCode === 13) {
     searchElement($('#searchbar').val()); 
@@ -60,7 +77,7 @@ function searchElement(elmt) {
   $('.word').click(function() {
     $('#searchResultsCont').hide();
     $('#treeCont').show();
-    $('#go-to-training').css('display', 'block');
+    showTrainingButton();
     $('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 
     exerciseId = $(this).attr('data-id');
@@ -70,6 +87,9 @@ function searchElement(elmt) {
   });
 }
 
+/*************************************************
+* TREE PAGE
+**************************************************/
 function populateTree(rootId, rootText) {
   TreeGraph.clear();
   
@@ -85,6 +105,9 @@ function populateTree(rootId, rootText) {
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
 
+/*************************************************
+* RADAR CHART PAGE
+**************************************************/
 function drawRadarChart() {
   var axes = Object.values(cognFunc);
   var axesKey = Object.keys(cognFunc);
@@ -158,24 +181,79 @@ function createRadarFilters(dataId) {
   });
 }
 
+/*************************************************
+* EXERCISE PAGE
+**************************************************/
 function createExercisePage(exId) {
   $('.video-filters-list').empty();
 
   $('#exercise-name').text(exercises[exId]);
+  $('iframe').attr('src', srclink + videos[4].key + '/preview');
 
   // populate checkbox filters for videos
   var relCf = rel_cf_ex[exId].split(',');
   for(var i = 0; i < relCf.length; ++i) {
     $('.video-filters-list').append(
       $('<li>').append(
-        $('<input>').attr('type', 'checkbox').attr('class', 'filterbox').attr('data-id', relCf[i]).prop('checked', true)
+        $('<input>').attr('type', 'checkbox').attr('class', 'filterbox videofilter').attr('data-id', relCf[i]).prop('checked', true)
       ).append(
         $('<span>').attr('class', 'filtertext').attr('data-id', relCf[i]).text(cognFunc[relCf[i]])
       )
     );
   }
+
+  $('.videofilter').click(function() {
+    var listId = $(this).parent().parent().attr('id');
+    updateVideo(listId);
+  });
 }
 
+/* List videos keys from google drive:
+  - Misread pass: 1kw1bAltFfYN6nxJ8XCoTxCTLhy4YZ8bF
+  - Pass fail - decision: 1yMEsCBgJAaGd5vwU-EcFd5Fz1FJxXXS0
+  - Pass fail - shitty pass: 1QI08B6eTO9AE4W8zpYqBFuJPYCYRZWa9
+  - Pass fail - misreading sign: 1H7iJ_JL5X6pnCi9t3o_OtIJpJH9CAyAK
+  - Pass success: 1TPjSpUkfgIpeiGEtoSlVkJ52LVrbK5aL
+*/
+
+// data structure hardcoded for ex3 in db
+var srclink = "https://drive.google.com/file/d/";
+var videos = [{
+  'cf': [],
+  'key': '1kw1bAltFfYN6nxJ8XCoTxCTLhy4YZ8bF'
+}, {
+  'cf': ['cf2', 'cf6'],
+  'key': '1yMEsCBgJAaGd5vwU-EcFd5Fz1FJxXXS0'
+}, {
+  'cf': ['cf1', 'cf5'],
+  'key': '1QI08B6eTO9AE4W8zpYqBFuJPYCYRZWa9'
+}, {
+  'cf': ['cf3', 'cf6'],
+  'key': '1H7iJ_JL5X6pnCi9t3o_OtIJpJH9CAyAK'
+}, {
+  'cf': ['cf1', 'cf2', 'cf3', 'cf4', 'cf5', 'cf6'],
+  'key': '1TPjSpUkfgIpeiGEtoSlVkJ52LVrbK5aL'
+}];
+
+//TODO: ugly code for proof of concept --> TO IMPROVE !!!!!
+function updateVideo(listId) {
+  var cf = [];
+  $.each($('#' + listId).children('li').children('.videofilter'), function(key, obj) {
+    if($(obj).prop('checked'))
+      cf.push($(obj).attr('data-id'))
+  });
+
+  if(cf.length == $('#' + listId).children('li').length)
+    $('#' + listId).parent().children('.video-frame').children('iframe').attr('src', srclink + videos[4].key + '/preview');
+  else if(cf.length == 0)
+    $('#' + listId).parent().children('.video-frame').children('iframe').attr('src', srclink + videos[0].key + '/preview');
+  else // Random video for now
+    $('#' + listId).parent().children('.video-frame').children('iframe').attr('src', srclink + videos[Math.round((Math.random()*2) + 1)].key + '/preview');
+}
+
+/*************************************************
+* SIDEBAR
+**************************************************/
 // NB: get cognitive functions for now
 // TODO : fix with exercises when third level of tree
 function addToSelectedExercises(exId) {
@@ -184,10 +262,16 @@ function addToSelectedExercises(exId) {
   $('#selected-exercises').append(
     $('<li>').append(
       //TODO: replace cognFunc by exercises
-      $('<span>').attr('class', 'filtertext').attr('data-id', exId).text(cognFunc[exId])
+      $('<span>').attr('class', 'exerciseList').attr('data-id', exId).text(cognFunc[exId])
     )
   );
+
+  $('.exerciseList').click(function() {
+    $(this).parent().remove();
+  })
 }
+
+init();
 
 /******* Radar Charts *******/
 // function getRadarData(d) {

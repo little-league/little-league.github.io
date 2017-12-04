@@ -162,7 +162,7 @@ ul#search-results {
   top: 0%;
   width: 15%;
   height: 100%;
-  overflow: hidden;
+  z-index: 999;
 }
 #sidebar.left {
   left: 0%;
@@ -178,6 +178,9 @@ ul#search-results {
 }
 #selected-exercises li {
   padding: 5% 0 5% 0;
+}
+.exerciseList {
+  cursor: pointer;
 }
 /************************************************
  * tree section

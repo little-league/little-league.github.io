@@ -30,19 +30,23 @@ var PageTransitions = (function() {
 		$pages.eq( current ).addClass( 'pt-page-current' );
 
 		$('#go-to-training').on( 'click', function() {
-			animcursor = 1;
-			nextPage( animcursor );
+			showBackButton();
+
+			options = {'animation':1, 'showPage': 1};
+			nextPage( options );
 			$('#sidebar').removeClass('right').addClass('left').css('display', 'block');
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
-			animcursor = 2;
-			nextPage( animcursor );
+			showTrainingButton();
+
+			options = {'animation':2, 'showPage': 0};
+			nextPage( options );
 			$('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 		} );
 	}
 
-	function nextPage(options ) {
+	function nextPage(options) {
 		var animation = (options.animation) ? options.animation : options;
 
 		if( isAnimating ) {
@@ -52,23 +56,24 @@ var PageTransitions = (function() {
 		isAnimating = true;
 		
 		var $currPage = $pages.eq( current );
+		current = options.showPage;
 
-		if(options.showPage){
-			if( options.showPage < pagesCount - 1 ) {
-				current = options.showPage;
-			}
-			else {
-				current = 0;
-			}
-		}
-		else{
-			if( current < pagesCount - 1 ) {
-				++current;
-			}
-			else {
-				current = 0;
-			}
-		}
+		// if(options.showPage){
+		// 	if( options.showPage < pagesCount - 1 ) {
+		// 		current = options.showPage;
+		// 	}
+		// 	else {
+		// 		current = 0;
+		// 	}
+		// }
+		// else{
+		// 	if( current < pagesCount - 1 ) {
+		// 		++current;
+		// 	}
+		// 	else {
+		// 		current = 0;
+		// 	}
+		// }
 
 		var $nextPage = $pages.eq( current ).addClass( 'pt-page-current' ),
 			outClass = '', inClass = '';

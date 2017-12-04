@@ -63,15 +63,6 @@ var TreeGraph = {
           .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
           .on("click", click);
 
-      nodeEnter.append("rect")
-          .attr("class", "nodebox")
-          .attr("x", function(d) { return d.children || d._children ? -105 : 10; })
-          .attr("y", -20)
-          .attr("width", function(d) { return d.children || d._children ? 100 : 160; })
-          .attr("height", 40)
-          .style("fill", "none")
-          .style("stroke", "#fff");
-
       nodeEnter.append("circle")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf"; })
           .attr("r", 1)
@@ -92,19 +83,21 @@ var TreeGraph = {
           return;
         
         // TODO: info image instead
-        d3.select(this).append("text")
+        d3.select(this).append("svg:image")
             .attr("class", "textinfo")
-            .attr("x", function(d) { return -20 - d.name.length * 8; })
-            .attr("dy", ".35em")
-            .attr("text-anchor", "end")
-            .text("i")
+            .attr("x", function(d) { return -20 - d.name.length * 10; })
+            .attr("y", -8)
+            .attr("xlink:href", "img/info_icon.png")
+            .style("width", '4%')
+            .style("height", '4%')
             .on('click', function(d) {
               event.stopPropagation();
               createExercisePage(d.id);
 
               // TODO: page order
-              animcursor = 1;
-              PageTransitions.nextPage( animcursor );
+              var options = {'animation':1, 'showPage': 2}
+              PageTransitions.nextPage( options );
+              showBackButton();
               $('#sidebar').css('display', 'none');
             });
       })

@@ -16,8 +16,9 @@ function addListItem(parent, link, text){
     drawRadarChart();
     createRadarFilters($(this).attr('data-id'));
 
-  	animcursor = 1;
-  	PageTransitions.nextPage( animcursor );
+  	var options = {'animation':1, 'showPage': 1}
+  	PageTransitions.nextPage( options );
+    showBackButton();
     $('#sidebar').removeClass('right').addClass('left').css('display', 'block');
   });
 }
