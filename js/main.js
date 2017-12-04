@@ -1,25 +1,24 @@
-/******* Global variables *******/
-var exerciseId;
+var selectedExList = [];
 /******* Radar chart variables *******/
 var radarData = [], cfVal = [];
 
 $('#sidebar').css('display', 'none');
 // $('#go-to-training').css('display', 'none');
 
-function getColor (d) {
-  if (d == "1990-1994" )
-    return "#9366bd";
-  else if (d == "1995-1999" )
-    return "#d62728";
-  else if (d == "2000-2004" )
-    return "#2ca02c";
-  else if (d == "2005-2009" )
-    return "#ff7f0e";
-  else if (d == "2010-2014" )
-    return "#1e77b4";
-  else
-    return "steelblue";
-}
+// function getColor (d) {
+//   if (d == "1990-1994" )
+//     return "#9366bd";
+//   else if (d == "1995-1999" )
+//     return "#d62728";
+//   else if (d == "2000-2004" )
+//     return "#2ca02c";
+//   else if (d == "2005-2009" )
+//     return "#ff7f0e";
+//   else if (d == "2010-2014" )
+//     return "#1e77b4";
+//   else
+//     return "steelblue";
+// }
 
 /******* Search page *******/
 $('#searchbar').keypress(function(e) {
@@ -110,21 +109,24 @@ function drawRadarChart() {
 
 function createRadarData(dataId) {
   cfVal = [];
+  var relEx;
 
-  if(dataId) {
-    // get all exercises saved in training
-    var relEx = rel_tr_ex[dataId].split(',');
-    for(var i = 0; i < relEx.length; ++i) {
-      // get all cognitive functions to each exercises
-      var cf = rel_cf_ex[relEx[i]].split(',');
-      // accumulate cognitive functions
-      for(var j = 0; j < cf.length; ++j) {
-        if(cfVal[cf[j]])
-          cfVal[cf[j]] += 1;
-        else
-          cfVal[cf[j]] = 1;
-      }
-    }  
+  // decide if get from training or saved list
+  if(dataId)
+    relEx = rel_tr_ex[dataId].split(',');
+  else
+    relEx = selectedExList;
+  
+  for(var i = 0; i < relEx.length; ++i) {
+    // get all cognitive functions to each exercises
+    var cf = rel_cf_ex[relEx[i]].split(',');
+    // accumulate cognitive functions
+    for(var j = 0; j < cf.length; ++j) {
+      if(cfVal[cf[j]])
+        cfVal[cf[j]] += 1;
+      else
+        cfVal[cf[j]] = 1;
+    }
   }
 }
 
@@ -172,6 +174,19 @@ function createExercisePage(exId) {
       )
     );
   }
+}
+
+// NB: get cognitive functions for now
+// TODO : fix with exercises when third level of tree
+function addToSelectedExercises(exId) {
+  selectedExList.push(exId);
+
+  $('#selected-exercises').append(
+    $('<li>').append(
+      //TODO: replace cognFunc by exercises
+      $('<span>').attr('class', 'filtertext').attr('data-id', exId).text(cognFunc[exId])
+    )
+  );
 }
 
 /******* Radar Charts *******/

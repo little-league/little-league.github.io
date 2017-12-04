@@ -172,6 +172,13 @@ ul#search-results {
   right: 0%;
   border-left: .5px solid white;
 }
+#selected-exercises {
+  list-style-type: none;
+  margin-top: 100%;
+}
+#selected-exercises li {
+  padding: 5% 0 5% 0;
+}
 /************************************************
  * tree section
  ************************************************/

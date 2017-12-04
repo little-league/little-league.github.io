@@ -177,6 +177,7 @@ var TreeGraph = {
         d.children = d._children;
         d._children = null;
       }
+      addToSelectedExercises(d.id);
       update(d);
     }
   },
