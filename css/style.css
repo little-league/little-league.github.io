@@ -205,7 +205,20 @@ text.node--leaf:hover {
   stroke: #fff;
   stroke-width: 1%;
 }
-
+.tooltip {   
+  position: absolute;           
+  text-align: center;
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background-color: white;   
+  color: black;
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;
+  opacity: 0;
+  word-wrap: break-word;
+  width: 200px;
+}
 /************************************************
  * training section
  ************************************************/

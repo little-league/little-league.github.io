@@ -30,6 +30,9 @@ var TreeGraph = {
               .scale(xScale)
               .ticks(5);
 
+    var tooltip = d3.select(container).append("div")
+                    .attr("class", "tooltip");
+
     root = data;
     root.x0 = height / 2;
     root.y0 = 0;
@@ -74,7 +77,9 @@ var TreeGraph = {
           .attr("dy", ".35em")
           .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
           .text(function(d) { return d.name; })
-          .style("fill-opacity", 1e-6);
+          .style("fill-opacity", 1e-6)
+          .on('mouseenter', onMouseOver)
+          .on('mouseleave', onMouseLeave);
 
       // UGLY IMPLEMENTATION OF INFO BOX "I"
       nodeEnter.each(function(d) {
@@ -90,16 +95,7 @@ var TreeGraph = {
             .attr("xlink:href", "img/info_icon.png")
             .style("width", '4%')
             .style("height", '4%')
-            .on('click', function(d) {
-              event.stopPropagation();
-              createExercisePage(d.id);
-
-              // TODO: page order
-              var options = {'animation':1, 'showPage': 2}
-              PageTransitions.nextPage( options );
-              showBackButton();
-              $('#sidebar').css('display', 'none');
-            });
+            .on('click', goToExerciseDescription);
       })
 
       // Transition nodes to their new position.
@@ -172,6 +168,35 @@ var TreeGraph = {
       }
       addToSelectedExercises(d.id);
       update(d);
+    }
+
+    function onMouseOver() {
+      var tooltip = d3.select('.tooltip');
+      tooltip.transition()        
+        .duration(200)      
+        .style("opacity", .8);
+
+      tooltip.html("tooltip")
+        .style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + "px");
+    }
+
+    function onMouseLeave() {
+      var tooltip = d3.select('.tooltip');
+      tooltip.transition()        
+        .duration(500)
+        .style("opacity", 0);
+    }
+
+    function goToExerciseDescription(d) {
+      event.stopPropagation();
+      createExercisePage(d.id);
+
+      // TODO: page order
+      var options = {'animation':1, 'showPage': 2}
+      PageTransitions.nextPage( options );
+      showBackButton();
+      $('#sidebar').css('display', 'none');
     }
   },
 
