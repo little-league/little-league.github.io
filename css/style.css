@@ -138,6 +138,10 @@ button:hover {
 /***************************************************************
 * home page style
 ****************************************************************/
+.pt-page-1 .container {
+  background: url(../img/logo.png) no-repeat center 10px;
+  background-size: 100px;
+}
 #searchCont {
   padding: 5%;
 }
@@ -159,7 +163,7 @@ ul#search-results {
 }
 #search-results li {
   padding: 2% 4%;
-  margin: 4% 0;
+  margin: 4%;
   border: 1px solid white;
   white-space: nowrap;
   display: inline-block;
