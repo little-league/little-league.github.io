@@ -160,9 +160,10 @@ span.word:hover {
 }
 ul#search-results {
   list-style: none;
+  padding: 0;
 }
 #search-results li {
-  padding: 2% 4%;
+  padding: 5px 10px;
   margin: 4%;
   border: 1px solid white;
   white-space: nowrap;

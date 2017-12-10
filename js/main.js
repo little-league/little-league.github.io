@@ -40,23 +40,26 @@ function showTrainingButton() {
 **************************************************/
 $('#searchbar').keypress(function(e) {
   if(e.keyCode === 13) {
-    searchElement($('#searchbar').val()); 
+    searchElement($('#searchbar').val());
   }
 });
 
 $('#searchBtn').click(function() {
-  searchElement($('#searchbar').val()); 
+  searchElement($('#searchbar').val());
 });
 
 function searchElement(elmt) {
-  var ex = Object.values(exercises);
-  var relatedEx = [];
-  for(var i = 0; i < ex.length; ++i) {
-    ex[i] = ex[i].toLowerCase();
-    if(ex[i].indexOf(elmt.toLowerCase()) != -1)
-      relatedEx.push(ex[i]);
+  var data = Object.values(exercises);
+  var dataKeys = Object.keys(exercises);
+  //var data = Object.values(tasks);
+  //var dataKeys = Object.keys(tasks);
+  var relatedData = [];
+  for(var i = 0; i < data.length; ++i) {
+    data[i] = data[i].toLowerCase();
+    if(data[i].indexOf(elmt.toLowerCase()) != -1)
+      relatedData.push(data[i]);
   }
-  if(relatedEx.length == 0)
+  if(relatedData.length == 0)
     return;
 
   $('#trainingListCont').hide();
@@ -65,23 +68,23 @@ function searchElement(elmt) {
 
   // data-attr: exercise or cf
   $('#search-results').empty();
-  for(var i = 0; i < relatedEx.length; ++i) {
-    var key = Object.keys(exercises)[ex.indexOf(relatedEx[i])];
+  for(var i = 0; i < relatedData.length; ++i) {
+    var key = dataKeys[data.indexOf(relatedData[i])];
     $('#search-results').append(
       $('<li>').append(
-        $('<span>').attr('class', 'word').attr('data-id', key).text(relatedEx[i])
+        $('<span>').attr('class', 'word').attr('data-id', key).text(relatedData[i])
       )
-    ) 
+    )
   }
-  
+
   $('.word').click(function() {
     $('#searchResultsCont').hide();
     $('#treeCont').show();
     showTrainingButton();
     $('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 
-    exerciseId = $(this).attr('data-id');
-    populateTree(exerciseId, $(this).text());
+    dataId = $(this).attr('data-id');
+    populateTree(dataId, $(this).text());
     createRadarData();
     drawRadarChart();
   });
@@ -92,7 +95,7 @@ function searchElement(elmt) {
 **************************************************/
 function populateTree(rootId, rootText) {
   TreeGraph.clear();
-  
+
   var cf = rel_cf_ex[rootId];
   cf = cf.split(',');
   var cf_children = [];
@@ -139,7 +142,7 @@ function createRadarData(dataId) {
     relEx = rel_tr_ex[dataId].split(',');
   else
     relEx = selectedExList;
-  
+
   for(var i = 0; i < relEx.length; ++i) {
     // get all cognitive functions to each exercises
     var cf = rel_cf_ex[relEx[i]].split(',');
