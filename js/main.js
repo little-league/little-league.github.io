@@ -104,7 +104,7 @@ function populateTree(rootId, rootText) {
       var cf = rel_cf_ex[id].split(',');
       for(var j = 0; j < cf.length; ++j) {
         if(cf[j].indexOf(rootId) == 0)
-          children.push({'name': exercises[id], 'id': j + "-" + id} );
+          children.push({'name': exercises[id], 'id': id} );
         }
     }
   }
