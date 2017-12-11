@@ -1,6 +1,6 @@
- html,body {
+ html, body {
     background-color: #26292E;
-    font-family: sans-serif;
+    font-family: 'Lato', Helvetica, sans-serif;
     font-size: 16px;
     font-weight: normal;
     line-height: 28px;
@@ -9,6 +9,7 @@
     height: 100%;
     width: 100%;
     margin: 0;
+    text-rendering: optimizeLegibility;
 }
 *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -24,6 +25,16 @@
 }
 .clearfix:after, .cf:after, .comment-respond:after {
   clear: both;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Titillium Web', Helvetica, sans-serif;
+  line-height: normal;
+  font-weight: 300;
 }
 
 h3 {
