@@ -24,3 +24,7 @@ var rel_cf_ex = firebase.database().ref('rel_cf_ex').on('value', function(data) 
 var rel_tr_ex = firebase.database().ref('rel_tr_ex').on('value', function(data) {
 	rel_tr_ex = data.val();
 });
+
+var rel_ex_ts = firebase.database().ref('rel_ex_ts').on('value', function(data) {
+	rel_ex_ts = data.val();
+});

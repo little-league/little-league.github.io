@@ -218,12 +218,12 @@ ul#search-results {
 .node text {
   font-size: 100%;
   font-weight: 100;
-  stroke: #fff;
 }
 .link {
   fill: none;
   stroke: #fff;
-  stroke-width: 1%;
+  stroke-width: 0.3%;
+  stroke-opacity: 0.4;
 }
 .tooltip {
   position: absolute;

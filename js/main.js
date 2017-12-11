@@ -41,8 +41,9 @@ $('#searchBtn').click(function() {
 function searchElement(elmt) {
   var data = Object.values(exercises);
   var dataKeys = Object.keys(exercises);
-  //var data = Object.values(tasks);
-  //var dataKeys = Object.keys(tasks);
+  data = data.concat(Object.values(tasks));
+  dataKeys = dataKeys.concat(Object.keys(tasks));
+
   var relatedData = [];
   for(var i = 0; i < data.length; ++i) {
     data[i] = data[i].toLowerCase();
@@ -73,7 +74,7 @@ function searchElement(elmt) {
     showTrainingButton();
 
     dataId = $(this).attr('data-id');
-    populateTree(dataId, $(this).text());
+    populateTree(dataId, $(this).text(), dataId.indexOf("ts") !== -1);
     createRadarData();
     drawRadarChart();
   });
@@ -82,18 +83,28 @@ function searchElement(elmt) {
 /*************************************************
 * TREE PAGE
 **************************************************/
-function populateTree(rootId, rootText) {
+function populateTree(rootId, rootText, isTask) {
+  console.log(isTask);
   TreeGraph.clear();
+  var children = [];
 
-  var cf = rel_cf_ex[rootId];
-  cf = cf.split(',');
-  var cf_children = [];
-  for(var i = 0; i < cf.length; ++i) {
-    cf_children[i] = {'name': cognFunc[cf[i]], 'id': cf[i]};
+  if(isTask) {
+    var ex = rel_ex_ts[rootId].split(',');
+    for(var i = 0; i < ex.length; ++i) {
+      var cf = rel_cf_ex[ex[i]].split(',');
+      var cf_children = [];
+      for(var j = 0; j < cf.length; ++j)
+        cf_children[j] = {'name': cognFunc[cf[j]], 'id': cf[j]};
+      children[i] = {'name': exercises[ex[i]], 'id': ex[i], 'children': cf_children};
+    }
+  } else {
+    var cf = rel_cf_ex[rootId].split(',');
+    for(var i = 0; i < cf.length; ++i) {
+      children[i] = {'name': cognFunc[cf[i]], 'id': cf[i]};
+    }
   }
 
-  var data = {'name': rootText, 'id': rootId, 'children': cf_children};
-
+  var data = {'name': rootText, 'id': rootId, 'children': children};
   TreeGraph.draw('#treeCont', 800, 500, data);
 }
 

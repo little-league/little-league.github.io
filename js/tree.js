@@ -3,7 +3,7 @@ var TreeGraph = {
   draw: function(container, width, height, data) {
     var tree, root;
 
-    var margin = {top: 0, right: 300, bottom: 100, left: 100},
+    var margin = {top: 0, right: 200, bottom: 100, left: 100},
       width = width,
       height = height;
 
@@ -83,10 +83,10 @@ var TreeGraph = {
 
       // UGLY IMPLEMENTATION OF INFO BOX "I"
       nodeEnter.each(function(d) {
-        //TODO: remove later when third level of tree
-        if(!(d.children || d._children))
+        // Just put boxes if it is an exercise
+        if(d.id.indexOf("ex") == -1)
           return;
-        
+
         d3.select(this).append("svg:image")
             .attr("class", "plusbutton")
             .attr("x", function(d) { return -20 - d.name.length * 10; })
@@ -179,8 +179,8 @@ var TreeGraph = {
 
     function onMouseOver() {
       var tooltip = d3.select('.tooltip');
-      tooltip.transition()        
-        .duration(200)      
+      tooltip.transition()
+        .duration(200)
         .style("opacity", .8);
 
       tooltip.html("tooltip")
@@ -190,7 +190,7 @@ var TreeGraph = {
 
     function onMouseLeave() {
       var tooltip = d3.select('.tooltip');
-      tooltip.transition()        
+      tooltip.transition()
         .duration(500)
         .style("opacity", 0);
     }
