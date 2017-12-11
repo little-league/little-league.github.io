@@ -285,4 +285,18 @@ function addToSelectedExercises(exId) {
   })
 }
 
+$('#saveBtn').click(function() {
+  var sessionName = $('#training-name').val();
+  var id = 'tr' + (Object.keys(training).length + 1);
+
+  if(selectedExList.length === 0)
+    return;
+  if(sessionName === "") {
+    alert('Please give a name to your session.');
+    return;
+  }
+  
+  saveTrainingSession(id, name, selectedExList);
+});
+
 init();

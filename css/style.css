@@ -110,6 +110,12 @@ button:hover {
   opacity: 1;
 }
 
+.input-text {
+  height: 40px;
+  padding: 1%;
+  font-size: 90%;
+}
+
 .c-box {
   width: 200px;
   height: 220px;
@@ -160,9 +166,6 @@ button:hover {
 }
 #searchbar {
   width: 40%;
-  height: 40px;
-  padding: 1%;
-  font-size: 90%;
 }
 span.word {
   color: #fff;
@@ -203,6 +206,7 @@ ul#search-results {
 #selected-exercises {
   list-style-type: none;
   width: 100%;
+  min-height: 50%;
 }
 #selected-exercises li {
   padding: 5% 0 2% 5%;
@@ -216,6 +220,13 @@ ul#search-results {
 #sidebar .description {
   margin-top: 80%;
   text-align: center;
+}
+.saveForm {
+  width: 100%;
+  text-align: center;
+}
+#training-name {
+  margin-bottom: 5%;
 }
 /************************************************
  * tree section
