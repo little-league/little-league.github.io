@@ -161,6 +161,14 @@ button:hover {
   background: url(../img/logo.png) no-repeat center 5%;
   background-size: 7%;
 }
+.logo-img {
+  cursor: pointer;
+  width: 8%;
+  height: 15%;
+  position: absolute;
+  margin-left: 46%;
+  margin-top: 2%;
+}
 #searchCont {
   padding: 10% 5% 5% 5%;
 }

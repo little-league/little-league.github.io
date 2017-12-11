@@ -5,10 +5,13 @@ var listIndex = 0;
 * GLOBAL STATE
 **************************************************/
 function init() {
-  listIndex = 0;
   $('#sidebar').css('display', 'none');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
+
+  $('#trainingListCont').show();
+  $('#treeCont').hide();
+  $('#searchResultsCont').hide();
 }
 
 function showBackButton() {
@@ -26,6 +29,10 @@ function showTrainingButton() {
   $('#sidebar').removeClass('left');
   $('#sidebar').addClass('right');
 }
+
+$('.logo-img').click(function() {
+  init();
+});
 
 /*************************************************
 * SEARCH PAGE
@@ -79,9 +86,6 @@ function searchElement(elmt) {
 
     dataId = $(this).attr('data-id');
     populateTree(dataId, $(this).text());
-    //TODO: I dont know why this is called, Im not sure if it is suppose to be here?
-    //createRadarData();
-    //drawRadarChart();
   });
 }
 
@@ -126,7 +130,6 @@ function getLeafs(ids, names, i = 0){
 /*************************************************
 * RADAR CHART PAGE
 **************************************************/
-
 $('#go-to-training').on( 'click', function() {
   createRadarData();
   drawRadarChart();
