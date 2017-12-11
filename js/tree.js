@@ -87,9 +87,13 @@ var TreeGraph = {
         if(d.id.indexOf("ex") == -1)
           return;
 
+        var isLeaf = false;
+        if(d3.select(this).select("circle").classed("node--leaf"))
+          isLeaf = true;
+
         d3.select(this).append("svg:image")
             .attr("class", "plusbutton")
-            .attr("x", function(d) { return -20 - d.name.length * 10; })
+            .attr("x", function(d) { return isLeaf ? d.name.length * 10 : -20 - d.name.length * 10; })
             .attr("y", -8)
             .attr("xlink:href", "img/plus_icon.png")
             .style("width", '4%')
@@ -98,7 +102,7 @@ var TreeGraph = {
 
         d3.select(this).append("svg:image")
             .attr("class", "textinfo")
-            .attr("x", function(d) { return -20 - d.name.length * 10 - 20; })
+            .attr("x", function(d) { return isLeaf ? 25 + d.name.length * 10 : -45 - d.name.length * 10; })
             .attr("y", -8)
             .attr("xlink:href", "img/info_icon.png")
             .style("width", '4%')

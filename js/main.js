@@ -43,6 +43,8 @@ function searchElement(elmt) {
   var dataKeys = Object.keys(exercises);
   data = data.concat(Object.values(tasks));
   dataKeys = dataKeys.concat(Object.keys(tasks));
+  data = data.concat(Object.values(cognFunc));
+  dataKeys = dataKeys.concat(Object.keys(cognFunc));
 
   var relatedData = [];
   for(var i = 0; i < data.length; ++i) {
@@ -74,7 +76,7 @@ function searchElement(elmt) {
     showTrainingButton();
 
     dataId = $(this).attr('data-id');
-    populateTree(dataId, $(this).text(), dataId.indexOf("ts") !== -1);
+    populateTree(dataId, $(this).text());
     createRadarData();
     drawRadarChart();
   });
@@ -83,29 +85,39 @@ function searchElement(elmt) {
 /*************************************************
 * TREE PAGE
 **************************************************/
-function populateTree(rootId, rootText, isTask) {
-  console.log(isTask);
+function populateTree(rootId, rootText) {
   TreeGraph.clear();
   var children = [];
 
-  if(isTask) {
+  if (rootId.indexOf("ts") == 0){ // Training
     var ex = rel_ex_ts[rootId].split(',');
     for(var i = 0; i < ex.length; ++i) {
       var cf = rel_cf_ex[ex[i]].split(',');
-      var cf_children = [];
-      for(var j = 0; j < cf.length; ++j)
-        cf_children[j] = {'name': cognFunc[cf[j]], 'id': cf[j]};
-      children[i] = {'name': exercises[ex[i]], 'id': ex[i], 'children': cf_children};
+      children[i] = {'name': exercises[ex[i]], 'id': ex[i], 'children': getLeafs(cf, cognFunc, i)};
     }
-  } else {
+  } else if(rootId.indexOf("ex") == 0) { // Exercise
     var cf = rel_cf_ex[rootId].split(',');
-    for(var i = 0; i < cf.length; ++i) {
-      children[i] = {'name': cognFunc[cf[i]], 'id': cf[i]};
+    children = getLeafs(cf, cognFunc);
+  } else if (rootId.indexOf("cf") == 0) { // Cognitive Function
+    var ex = [];
+    for (var id in rel_cf_ex) {
+      var cf = rel_cf_ex[id].split(',');
+      for(var j = 0; j < cf.length; ++j) {
+        if(cf[j].indexOf(rootId) == 0)
+          children.push({'name': exercises[id], 'id': j + "-" + id} );
+        }
     }
   }
 
   var data = {'name': rootText, 'id': rootId, 'children': children};
   TreeGraph.draw('#treeCont', 800, 500, data);
+}
+
+function getLeafs(ids, names, i = 0){
+  var children = [];
+  for(var j = 0; j < ids.length; ++j)
+    children[j] = {'name': names[ids[j]], 'id': i + "-" + ids[j]};
+  return children;
 }
 
 /*************************************************
