@@ -1,9 +1,11 @@
 var selectedExList = [], radarData = [], cfVal = [];
+var listIndex = 0;
 
 /*************************************************
 * GLOBAL STATE
 **************************************************/
 function init() {
+  listIndex = 0;
   $('#sidebar').css('display', 'none');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
@@ -282,10 +284,10 @@ function updateVideo(listId) {
 * SIDEBAR
 **************************************************/
 function addToSelectedExercises(exId) {
-  selectedExList.push(exId);
+  selectedExList['index' + listIndex] = exId;
 
   $('#selected-exercises').append(
-    $('<li>').append(
+    $('<li>').attr('id', 'index' + listIndex++).append(
       $('<img>').attr('class', 'deleteicon').attr('src', 'img/delete_icon.png')
     ).append(
       $('<span>').attr('class', 'exerciseList').attr('data-id', exId).text(exercises[exId])
@@ -294,6 +296,8 @@ function addToSelectedExercises(exId) {
 
   $('.deleteicon').click(function() {
     $(this).parent().remove();
+    var parentId = $(this).parent().attr('id');
+    delete selectedExList[parentId];
   })
 }
 
@@ -301,14 +305,14 @@ $('#saveBtn').click(function() {
   var sessionName = $('#training-name').val();
   var id = 'tr' + (Object.keys(training).length + 1);
 
-  if(selectedExList.length === 0)
+  if(Object.keys(selectedExList).length === 0)
     return;
   if(sessionName === "") {
     alert('Please give a name to your session.');
     return;
   }
-  
-  saveTrainingSession(id, sessionName, selectedExList);
+
+  saveTrainingSession(id, sessionName, Object.values(selectedExList));
 });
 
 init();
