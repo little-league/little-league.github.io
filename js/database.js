@@ -10,6 +10,10 @@ var cognFunc = firebase.database().ref('cognitive_functions').on('value', functi
 	cognFunc = data.val();
 });
 
+var cognFuncDesc = firebase.database().ref('cognitive_functions_desc').on('value', function(data) {
+	cognFuncDesc = data.val();
+});
+
 var exercises = firebase.database().ref('exercises').on('value', function(data) {
 	exercises = data.val();
 });

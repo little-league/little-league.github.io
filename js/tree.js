@@ -181,13 +181,24 @@ var TreeGraph = {
       update(d);
     }
 
-    function onMouseOver() {
+    function onMouseOver(d) {
+      var id = d.id;
+
+      //TODO: only show tooltip for cfs for now
+      if(id.indexOf("cf") == -1)
+        return;
+
+      if(id.indexOf("-") >= 0)
+        id = id.split('-')[1];
+
+      var text = cognFuncDesc[id];
       var tooltip = d3.select('.tooltip');
+
       tooltip.transition()
         .duration(200)
         .style("opacity", .8);
 
-      tooltip.html("tooltip")
+      tooltip.html(text)
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + "px");
     }
