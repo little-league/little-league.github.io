@@ -16,10 +16,27 @@ function init() {
 
 function showBackButton() {
   $('#sidebar').css('display', 'block');
-  $('#go-to-planning').css('display', 'block');
-  $('#go-to-training').css('display', 'none');
   $('#sidebar').removeClass('right');
   $('#sidebar').addClass('left');
+
+  $('#go-to-planning').css('display', 'block');
+  $('#go-to-training').css('display', 'none');
+  $('#go-to-planning').removeClass('right');
+  $('#go-to-planning').addClass('left');
+
+  $('#go-to-planning-icon').removeClass('icon-up');
+  $('#go-to-planning-icon').addClass('icon-left');
+}
+
+function showBackFromExercise() {
+  $('#sidebar').css('display', 'block');
+  $('#go-to-planning').css('display', 'block');
+  $('#go-to-training').css('display', 'none');
+
+  $('#go-to-planning').removeClass('left');
+  $('#go-to-planning').addClass('right');
+  $('#go-to-planning-icon').removeClass('icon-left');
+  $('#go-to-planning-icon').addClass('icon-up');
 }
 
 function showTrainingButton() {
@@ -166,7 +183,7 @@ function createRadarData(dataId) {
   if(dataId)
     relEx = rel_tr_ex[dataId].split(',');
   else
-    relEx = selectedExList;
+    relEx = Object.values(selectedExList);
 
   for(var i = 0; i < relEx.length; ++i) {
     // get all cognitive functions to each exercises
@@ -188,7 +205,7 @@ function createRadarFilters(dataId) {
   if(dataId) // get all exercises saved in training
     relEx = rel_tr_ex[dataId].split(',');
   else
-    relEx = selectedExList;
+    relEx = Object.values(selectedExList);
 
   for(var i = 0; i < relEx.length; ++i) {
     $('#training-filters-list').append(

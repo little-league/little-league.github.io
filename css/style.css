@@ -306,12 +306,11 @@ ul#search-results {
 * exercise section
 ****************************************************************/
 #exercise-name {
-  padding-left: 15%;
+  padding-right: 15%;
 }
 .video-cont {
   display: flex;
   position: relative;
-  left: 15%;
   width: 85%;
   height: 100%;
 }

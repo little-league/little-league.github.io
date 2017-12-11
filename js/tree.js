@@ -214,9 +214,9 @@ var TreeGraph = {
       event.stopPropagation();
       createExercisePage(d.id);
 
-      var options = {'animation':1, 'showPage': 2}
+      var options = {'animation':3, 'showPage': 2}
       PageTransitions.nextPage( options );
-      showBackButton();
+      showBackFromExercise();
     }
 
     function addToSidebarList(d) {

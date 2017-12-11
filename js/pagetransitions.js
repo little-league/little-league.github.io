@@ -41,6 +41,9 @@ var PageTransitions = (function() {
 			showTrainingButton();
 
 			options = {'animation':2, 'showPage': 0};
+			if(current == 2)
+				options.animation = 4;
+
 			nextPage( options );
 			$('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 		} );
@@ -58,23 +61,6 @@ var PageTransitions = (function() {
 		var $currPage = $pages.eq( current );
 		current = options.showPage;
 
-		// if(options.showPage){
-		// 	if( options.showPage < pagesCount - 1 ) {
-		// 		current = options.showPage;
-		// 	}
-		// 	else {
-		// 		current = 0;
-		// 	}
-		// }
-		// else{
-		// 	if( current < pagesCount - 1 ) {
-		// 		++current;
-		// 	}
-		// 	else {
-		// 		current = 0;
-		// 	}
-		// }
-
 		var $nextPage = $pages.eq( current ).addClass( 'pt-page-current' ),
 			outClass = '', inClass = '';
 
@@ -88,14 +74,14 @@ var PageTransitions = (function() {
 				outClass = 'pt-page-moveToRight';
 				inClass = 'pt-page-moveFromLeft';
 				break;
-			// case 3:
-			// 	outClass = 'pt-page-moveToTop';
-			// 	inClass = 'pt-page-moveFromBottom';
-			// 	break;
-			// case 4:
-			// 	outClass = 'pt-page-moveToBottom';
-			// 	inClass = 'pt-page-moveFromTop';
-			// 	break;
+			case 3:
+				outClass = 'pt-page-moveToTop';
+				inClass = 'pt-page-moveFromBottom';
+				break;
+			case 4:
+				outClass = 'pt-page-moveToBottom';
+				inClass = 'pt-page-moveFromTop';
+				break;
 			// case 5:
 			// 	outClass = 'pt-page-fade';
 			// 	inClass = 'pt-page-moveFromRight pt-page-ontop';
