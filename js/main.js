@@ -296,7 +296,7 @@ $('#saveBtn').click(function() {
     return;
   }
   
-  saveTrainingSession(id, name, selectedExList);
+  saveTrainingSession(id, sessionName, selectedExList);
 });
 
 init();
