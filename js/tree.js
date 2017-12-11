@@ -3,7 +3,7 @@ var TreeGraph = {
   draw: function(container, width, height, data) {
     var tree, root;
 
-    var margin = {top: 0, right: 150, bottom: 100, left: 100},
+    var margin = {top: 0, right: 300, bottom: 100, left: 100},
       width = width,
       height = height;
 
@@ -87,10 +87,18 @@ var TreeGraph = {
         if(!(d.children || d._children))
           return;
         
-        // TODO: info image instead
+        d3.select(this).append("svg:image")
+            .attr("class", "plusbutton")
+            .attr("x", function(d) { return -20 - d.name.length * 10; })
+            .attr("y", -8)
+            .attr("xlink:href", "img/plus_icon.png")
+            .style("width", '4%')
+            .style("height", '4%')
+            .on('click', addToSidebarList);
+
         d3.select(this).append("svg:image")
             .attr("class", "textinfo")
-            .attr("x", function(d) { return -20 - d.name.length * 10; })
+            .attr("x", function(d) { return -20 - d.name.length * 10 - 20; })
             .attr("y", -8)
             .attr("xlink:href", "img/info_icon.png")
             .style("width", '4%')
@@ -166,7 +174,6 @@ var TreeGraph = {
         d.children = d._children;
         d._children = null;
       }
-      addToSelectedExercises(d.id);
       update(d);
     }
 
@@ -192,11 +199,14 @@ var TreeGraph = {
       event.stopPropagation();
       createExercisePage(d.id);
 
-      // TODO: page order
       var options = {'animation':1, 'showPage': 2}
       PageTransitions.nextPage( options );
       showBackButton();
-      $('#sidebar').css('display', 'none');
+    }
+
+    function addToSidebarList(d) {
+      event.stopPropagation();
+      addToSelectedExercises(d.id);
     }
   },
 

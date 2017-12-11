@@ -19,6 +19,5 @@ function addListItem(parent, link, text){
   	var options = {'animation':1, 'showPage': 1}
   	PageTransitions.nextPage( options );
     showBackButton();
-    $('#sidebar').removeClass('right').addClass('left').css('display', 'block');
   });
 }

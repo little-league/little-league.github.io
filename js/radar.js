@@ -401,6 +401,9 @@ var RadarChart = {
      ExtraWidthY: 200,
      color: d3.scale.category10()
     };
+
+    var tooltip = d3.select(id).append("div")
+                    .attr("class", "tooltip");
     
     if('undefined' !== typeof options){
       for(var i in options){
@@ -483,13 +486,13 @@ var RadarChart = {
       .attr("dy", "1.5em")
       .attr("transform", function(d, i){return "translate(0, -10)"})
       .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-      .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+      .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+      .on('mouseenter', onMouseOver)
+      .on('mouseleave', onMouseLeave);
 
-   
     d.forEach(function(y, x){
       dataValues = [];
-      g.selectAll(".nodes")
-      .data(y, function(j, i){
+      g.selectAll(".nodes").data(y, function(j, i){
         dataValues.push([
         cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
         cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
@@ -497,36 +500,54 @@ var RadarChart = {
       });
       dataValues.push(dataValues[0]);
       g.selectAll(".area")
-             .data([dataValues])
-             .enter()
-             .append("polygon")
-             .attr("class", "radar-chart-serie"+series)
-             .style("stroke-width", "2px")
-             .style("stroke", cfg.color(series))
-             .attr("points",function(d) {
-               var str="";
-               for(var pti=0;pti<d.length;pti++){
-                 str=str+d[pti][0]+","+d[pti][1]+" ";
-               }
-               return str;
-              })
-             .style("fill", function(j, i){return cfg.color(series)})
-             .style("fill-opacity", cfg.opacityArea)
-             .on('mouseover', function (d){
-                      z = "polygon."+d3.select(this).attr("class");
-                      g.selectAll("polygon")
-                       .transition(200)
-                       .style("fill-opacity", 0.1); 
-                      g.selectAll(z)
-                       .transition(200)
-                       .style("fill-opacity", .7);
-                      })
-             .on('mouseout', function(){
-                      g.selectAll("polygon")
-                       .transition(200)
-                       .style("fill-opacity", cfg.opacityArea);
-             });
+        .data([dataValues])
+        .enter()
+        .append("polygon")
+        .attr("class", "radar-chart-serie"+series)
+        .style("stroke-width", "2px")
+        .style("stroke", cfg.color(series))
+        .attr("points",function(d) {
+          var str="";
+          for(var pti=0;pti<d.length;pti++){
+            str=str+d[pti][0]+","+d[pti][1]+" ";
+          }
+          return str;
+        })
+        .style("fill", function(j, i){return cfg.color(series)})
+        .style("fill-opacity", cfg.opacityArea)
+        .on('mouseover', function (d){
+          z = "polygon."+d3.select(this).attr("class");
+          g.selectAll("polygon")
+            .transition(200)
+            .style("fill-opacity", 0.1); 
+          g.selectAll(z)
+            .transition(200)
+            .style("fill-opacity", .7);
+         })
+        .on('mouseout', function(){
+          g.selectAll("polygon")
+            .transition(200)
+            .style("fill-opacity", cfg.opacityArea);
+        });
       series++;
     });
+
+    function onMouseOver() {
+      var tooltip = d3.select('.tooltip');
+      tooltip.transition()        
+        .duration(200)      
+        .style("opacity", .8);
+
+      tooltip.html("tooltip")
+        .style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + "px");
+    }
+
+    function onMouseLeave() {
+      var tooltip = d3.select('.tooltip');
+      tooltip.transition()        
+        .duration(500)
+        .style("opacity", 0);
+    }
   }
 };

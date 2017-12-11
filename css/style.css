@@ -36,6 +36,8 @@ text {
 
 ul {
   display: inline-block;
+  list-style-type: none;
+  -webkit-padding-start: 0%;
 }
 a {
   cursor: pointer;
@@ -139,11 +141,11 @@ button:hover {
 * home page style
 ****************************************************************/
 .pt-page-1 .container {
-  background: url(../img/logo.png) no-repeat center 10px;
-  background-size: 100px;
+  background: url(../img/logo.png) no-repeat center 5%;
+  background-size: 7%;
 }
 #searchCont {
-  padding: 5%;
+  padding: 10% 5% 5% 5%;
 }
 #searchbar {
   width: 40%;
@@ -159,7 +161,6 @@ span.word:hover {
   color: #fbf111;
 }
 ul#search-results {
-  list-style: none;
   padding: 0;
 }
 #search-results li {
@@ -190,19 +191,26 @@ ul#search-results {
 }
 #selected-exercises {
   list-style-type: none;
-  margin-top: 100%;
+  width: 100%;
 }
 #selected-exercises li {
-  padding: 5% 0 5% 0;
+  padding: 5% 0 2% 5%;
 }
 .exerciseList {
+  padding-left: 5%;
+}
+.deleteicon {
   cursor: pointer;
+}
+#sidebar .description {
+  margin-top: 80%;
+  text-align: center;
 }
 /************************************************
  * tree section
  ************************************************/
  #treeCont {
-  padding-top: 0%;
+  margin-top: -5%;
  }
 .node {
   cursor: pointer;
@@ -211,9 +219,6 @@ ul#search-results {
   font-size: 100%;
   font-weight: 100;
   stroke: #fff;
-}
-text.node--leaf:hover {
-  stroke: #fbf111;
 }
 .link {
   fill: none;
@@ -242,7 +247,7 @@ text.node--leaf:hover {
 }
 #training-page h3 {
   text-align: center;
-  margin-bottom: 3%;
+  width: 70%;
 }
 #training-chart {
   padding-top: 3%;
@@ -254,9 +259,14 @@ text.node--leaf:hover {
   float: right;
   border: 1px solid white;
   text-align: left;
+  margin-top: 5%;
 }
 #training-filters-list {
   list-style-type: none;
+  width: 100%;
+}
+#training-filters-list li {
+  padding-left: 5%;
 }
 .filterbox {
   margin-right: 5%;
@@ -265,17 +275,19 @@ text.node--leaf:hover {
 /***************************************************************
 * exercise section
 ****************************************************************/
+#exercise-name {
+  padding-left: 15%;
+}
 .video-cont {
   display: flex;
   position: relative;
-  left: -10%;
+  left: 15%;
   width: 85%;
   height: 100%;
 }
 .video-column {
   width: 50%;
   height: 100%;
-  /*border: .5px solid white;*/
 }
 .video-frame {
   width: 80%;
@@ -285,8 +297,12 @@ text.node--leaf:hover {
   margin-top: 5%;
 }
 .video-filters-list {
-  margin-left: 15%;
   list-style-type: none;
+  width: 80%;
+  padding-left: 25%;
+}
+.video-filters-list li{
+  text-align: initial;
 }
 /***************************************************************
 * Codrops Header Style

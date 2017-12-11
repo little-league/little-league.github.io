@@ -1,21 +1,5 @@
 var selectedExList = [], radarData = [], cfVal = [];
 
-
-
-// function getColor (d) {
-//   if (d == "1990-1994" )
-//     return "#9366bd";
-//   else if (d == "1995-1999" )
-//     return "#d62728";
-//   else if (d == "2000-2004" )
-//     return "#2ca02c";
-//   else if (d == "2005-2009" )
-//     return "#ff7f0e";
-//   else if (d == "2010-2014" )
-//     return "#1e77b4";
-//   else
-//     return "steelblue";
-// }
 /*************************************************
 * GLOBAL STATE
 **************************************************/
@@ -26,13 +10,19 @@ function init() {
 }
 
 function showBackButton() {
+  $('#sidebar').css('display', 'block');
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
+  $('#sidebar').removeClass('right');
+  $('#sidebar').addClass('left');
 }
 
 function showTrainingButton() {
+  $('#sidebar').css('display', 'block');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'block');
+  $('#sidebar').removeClass('left');
+  $('#sidebar').addClass('right');
 }
 
 /*************************************************
@@ -81,7 +71,6 @@ function searchElement(elmt) {
     $('#searchResultsCont').hide();
     $('#treeCont').show();
     showTrainingButton();
-    $('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 
     dataId = $(this).attr('data-id');
     populateTree(dataId, $(this).text());
@@ -257,79 +246,20 @@ function updateVideo(listId) {
 /*************************************************
 * SIDEBAR
 **************************************************/
-// NB: get cognitive functions for now
-// TODO : fix with exercises when third level of tree
 function addToSelectedExercises(exId) {
   selectedExList.push(exId);
 
   $('#selected-exercises').append(
     $('<li>').append(
-      //TODO: replace cognFunc by exercises
-      $('<span>').attr('class', 'exerciseList').attr('data-id', exId).text(cognFunc[exId])
+      $('<img>').attr('class', 'deleteicon').attr('src', 'img/delete_icon.png')
+    ).append(
+      $('<span>').attr('class', 'exerciseList').attr('data-id', exId).text(exercises[exId])
     )
   );
 
-  $('.exerciseList').click(function() {
+  $('.deleteicon').click(function() {
     $(this).parent().remove();
   })
 }
 
 init();
-
-/******* Radar Charts *******/
-// function getRadarData(d) {
-//   var data = [];
-//   var groups = [];
-//   d.forEach(function(record) {
-//     var group = record.group;
-//     if (groups.indexOf(group) < 0) {
-//       groups.push(group);
-//       data.push({
-//         group: group,
-//         axes: []
-//       });
-//     };
-//     data.forEach(function(d) {
-//       if (d.group === record.group) {
-//         d.axes.push({
-//           axis: record.axis,
-//           value: parseInt(record.value),
-//           description: record.description
-//         });
-//       }
-//     });
-//   });
-//   return data;
-// }
-
-//TODO: change data file
-// d3.csv('radar.csv', function(data) {
-
-//   for (var element in countryArry) {
-//     var fdata = data.filter(function(d) { return d.country.match(element) })
-//     if ( fdata.length == 0 )
-//       continue;
-//     radarData = getRadarData( fdata );
-
-//     d3.select("#training-chart")
-//       .append("div")
-//       .attr("id", element)
-//       .attr("class", "c-box")
-//       .append("h3")
-//       .text(element);
-
-//     RadarChart.draw("#" + element, radarData);
-//   }
-
-  // $(".c-box").hover(
-  //   function() {
-  //     var id = $(this).attr("id");
-  //     var fdata = dataset.filter(function(d) {
-  //       return d.Years.match(currentYear) && d.Country.match(id)
-  //     });
-  //     graph.highlight(fdata);
-  //   }, function() {
-  //     graph.unhighlight();
-  //   }
-  // );
-// });
