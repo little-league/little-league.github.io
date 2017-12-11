@@ -179,7 +179,7 @@ ul#search-results {
 }
 #search-results li {
   padding: 5px 10px;
-  margin: 4%;
+  margin: 30px;
   border: 1px solid white;
   white-space: nowrap;
   display: inline-block;

@@ -77,8 +77,9 @@ function searchElement(elmt) {
 
     dataId = $(this).attr('data-id');
     populateTree(dataId, $(this).text());
-    createRadarData();
-    drawRadarChart();
+    //TODO: I dont know why this is called, Im not sure if it is suppose to be here?
+    //createRadarData();
+    //drawRadarChart();
   });
 }
 
@@ -123,6 +124,13 @@ function getLeafs(ids, names, i = 0){
 /*************************************************
 * RADAR CHART PAGE
 **************************************************/
+
+$('#go-to-training').on( 'click', function() {
+  createRadarData();
+  drawRadarChart();
+  createRadarFilters();
+});
+
 function drawRadarChart() {
   var axes = Object.values(cognFunc);
   var axesKey = Object.keys(cognFunc);
@@ -170,9 +178,13 @@ function createRadarData(dataId) {
 
 function createRadarFilters(dataId) {
   $('#training-filters-list').empty();
+  var relEx;
+  // decide if get from training or saved list
+  if(dataId) // get all exercises saved in training
+    relEx = rel_tr_ex[dataId].split(',');
+  else
+    relEx = selectedExList;
 
-  // get all exercises saved in training
-  var relEx = rel_tr_ex[dataId].split(',');
   for(var i = 0; i < relEx.length; ++i) {
     $('#training-filters-list').append(
       $('<li>').append(
@@ -295,7 +307,7 @@ $('#saveBtn').click(function() {
     alert('Please give a name to your session.');
     return;
   }
-  
+
   saveTrainingSession(id, name, selectedExList);
 });
 
