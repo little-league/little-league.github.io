@@ -532,13 +532,17 @@ var RadarChart = {
       series++;
     });
 
-    function onMouseOver() {
+    function onMouseOver(d) {
+      var ind = Object.values(cognFunc).indexOf(d);
+      var id = Object.keys(cognFunc)[ind];
+      var text = cognFuncDesc[id];
+
       var tooltip = d3.select('.tooltip');
       tooltip.transition()        
         .duration(200)      
         .style("opacity", .8);
 
-      tooltip.html("tooltip")
+      tooltip.html(text)
         .style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + "px");
     }
