@@ -1,10 +1,11 @@
 var selectedExList = [], radarData = [], cfVal = [];
-var listIndex = 0;
+var listIndex = 0, homepage = true;
 
 /*************************************************
 * GLOBAL STATE
 **************************************************/
 function init() {
+  homepage = true;
   $('#sidebar').css('display', 'none');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
@@ -16,16 +17,13 @@ function init() {
 
 function showBackButton() {
   $('#sidebar').css('display', 'block');
-  $('#sidebar').removeClass('right');
-  $('#sidebar').addClass('left');
+  $('#sidebar').removeClass('right').addClass('left');
 
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
-  $('#go-to-planning').removeClass('right');
-  $('#go-to-planning').addClass('left');
 
-  $('#go-to-planning-icon').removeClass('icon-up');
-  $('#go-to-planning-icon').addClass('icon-left');
+  $('#go-to-planning').removeClass('right').addClass('left');
+  $('#go-to-planning-icon').removeClass('icon-up').addClass('icon-left');
 }
 
 function showBackFromExercise() {
@@ -33,18 +31,15 @@ function showBackFromExercise() {
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
 
-  $('#go-to-planning').removeClass('left');
-  $('#go-to-planning').addClass('right');
-  $('#go-to-planning-icon').removeClass('icon-left');
-  $('#go-to-planning-icon').addClass('icon-up');
+  $('#go-to-planning').removeClass('left').addClass('right');
+  $('#go-to-planning-icon').removeClass('icon-left').addClass('icon-up');
 }
 
 function showTrainingButton() {
   $('#sidebar').css('display', 'block');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'block');
-  $('#sidebar').removeClass('left');
-  $('#sidebar').addClass('right');
+  $('#sidebar').removeClass('left').addClass('right');
 }
 
 $('.logo-img').click(function() {
@@ -56,11 +51,13 @@ $('.logo-img').click(function() {
 **************************************************/
 $('#searchbar').keypress(function(e) {
   if(e.keyCode === 13) {
+    homepage = false;
     searchElement($('#searchbar').val());
   }
 });
 
 $('#searchBtn').click(function() {
+  homepage = false;
   searchElement($('#searchbar').val());
 });
 

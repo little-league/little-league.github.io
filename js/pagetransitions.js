@@ -38,14 +38,18 @@ var PageTransitions = (function() {
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
-			showTrainingButton();
+			if(!homepage)
+				showTrainingButton();
+			else {
+				$('#sidebar').css('display', 'none');
+  				$('#go-to-planning').css('display', 'none');
+			}
 
 			options = {'animation':2, 'showPage': 0};
 			if(current == 2)
 				options.animation = 4;
 
 			nextPage( options );
-			$('#sidebar').removeClass('left').addClass('right').css('display', 'block');
 		} );
 	}
 
