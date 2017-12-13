@@ -19,7 +19,7 @@ var PageTransitions = (function() {
 		animEndEventName = animEndEventNames[ Modernizr.prefixed( 'animation' ) ],
 		// support css animations
 		support = Modernizr.cssanimations;
-	
+
 	function init() {
 
 		$pages.each( function() {
@@ -35,6 +35,7 @@ var PageTransitions = (function() {
 			options = {'animation':1, 'showPage': 1};
 			nextPage( options );
 			$('#sidebar').removeClass('right').addClass('left').css('display', 'block');
+		  $('#pt-main').removeClass('sidebarShown');
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
@@ -42,7 +43,8 @@ var PageTransitions = (function() {
 				showTrainingButton();
 			else {
 				$('#sidebar').css('display', 'none');
-  				$('#go-to-planning').css('display', 'none');
+			  $('#pt-main').removeClass('sidebarShown');
+  			$('#go-to-planning').css('display', 'none');
 			}
 
 			options = {'animation':2, 'showPage': 0};
@@ -61,7 +63,7 @@ var PageTransitions = (function() {
 		}
 
 		isAnimating = true;
-		
+
 		var $currPage = $pages.eq( current );
 		current = options.showPage;
 
@@ -319,7 +321,7 @@ var PageTransitions = (function() {
 
 	init();
 
-	return { 
+	return {
 		init : init,
 		nextPage : nextPage,
 	};

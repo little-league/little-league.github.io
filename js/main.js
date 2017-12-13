@@ -7,6 +7,7 @@ var listIndex = 0, homepage = true;
 function init() {
   homepage = true;
   $('#sidebar').css('display', 'none');
+  $('#pt-main').removeClass('sidebarShown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
 
@@ -18,6 +19,7 @@ function init() {
 function showBackButton() {
   $('#sidebar').css('display', 'block');
   $('#sidebar').removeClass('right').addClass('left');
+  $('#pt-main').addClass('sidebarShown');
 
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
@@ -28,6 +30,7 @@ function showBackButton() {
 
 function showBackFromExercise() {
   $('#sidebar').css('display', 'block');
+  $('#pt-main').addClass('sidebarShown');
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
 
@@ -37,6 +40,7 @@ function showBackFromExercise() {
 
 function showTrainingButton() {
   $('#sidebar').css('display', 'block');
+  $('#pt-main').addClass('sidebarShown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'block');
   $('#sidebar').removeClass('left').addClass('right');
