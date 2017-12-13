@@ -111,6 +111,7 @@ button:hover {
 }
 
 .input-text {
+  max-width: 100%;
   height: 40px;
   padding: 1%;
   font-size: 90%;
@@ -202,6 +203,7 @@ ul#search-results {
   position: fixed;
   top: 0%;
   width: 15%;
+  padding: 1%;
   height: 100%;
   z-index: 999;
 }
@@ -274,9 +276,6 @@ ul#search-results {
 /************************************************
  * training section
  ************************************************/
-#training-page.container {
-  padding-left: 15%;
-}
 #training-page h3 {
   text-align: center;
   width: 70%;
@@ -420,8 +419,12 @@ ul#search-results {
   perspective: 1200px;
   transition: all .2s ease-in-out;
 }
-.pt-perspective.sidebar-shown {
+.pt-perspective.sidebar-left,
+.pt-perspective.sidebar-right {
   width: 85%;
+}
+.pt-perspective.sidebar-left {
+  margin-left: 15%;
 }
 .pt-page {
   width: 100%;
