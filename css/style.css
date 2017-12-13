@@ -288,7 +288,6 @@ ul#search-results {
 #training-filters-cont {
   width: 30%;
   float: right;
-  border: 1px solid white;
   text-align: left;
   margin-top: 5%;
 }
@@ -300,7 +299,9 @@ ul#search-results {
   padding-left: 5%;
 }
 .filterbox {
-  margin-right: 5%;
+  margin: 0 5% 0 0;
+  position: relative;
+  top: -2px;
 }
 
 /***************************************************************
@@ -311,25 +312,22 @@ ul#search-results {
 }
 .video-cont {
   display: flex;
-  position: relative;
-  width: 85%;
   height: 100%;
 }
 .video-column {
   width: 50%;
   height: 100%;
+  padding: 5%;
+  text-align: left;
 }
 .video-frame {
   width: 80%;
   height: 40%;
   border: .5px solid white;
-  margin: 10%;
-  margin-top: 5%;
+  margin-bottom: 10%;
 }
 .video-filters-list {
-  list-style-type: none;
-  width: 80%;
-  padding-left: 25%;
+  width: 100%;
 }
 .video-filters-list li{
   text-align: initial;
