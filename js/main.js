@@ -103,6 +103,12 @@ function searchElement(elmt) {
   });
 }
 
+$("#go-to-mytrainings").click(function(){
+  $('#trainingListCont').show();
+  $('#treeCont').hide();
+  $('#searchResultsCont').hide();
+});
+
 /*************************************************
 * TREE PAGE
 **************************************************/
