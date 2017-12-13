@@ -3,7 +3,7 @@
     font-family: 'Lato', Helvetica, sans-serif;
     font-size: 16px;
     font-weight: normal;
-    line-height: 28px;
+    line-height: 1.5em;
     width:1024px;
     color: #fff;
     height: 100%;
@@ -176,21 +176,23 @@ button:hover {
   width: 40%;
 }
 span.word {
-  color: #fff;
-  cursor: pointer;
-}
-span.word:hover {
-  color: #fbf111;
+  display: inline-block;
+  padding: 5px 10px;
 }
 ul#search-results {
   padding: 0;
 }
 #search-results li {
-  padding: 5px 10px;
+  background: #fff;
+  color: #26292E;
   margin: 30px;
-  border: 1px solid white;
   white-space: nowrap;
   display: inline-block;
+  cursor: pointer;
+  opacity: 0.9;
+}
+#search-results li:hover {
+  opacity: 1;
 }
 
 /***************************************************************
@@ -258,11 +260,11 @@ ul#search-results {
 .tooltip {
   position: absolute;
   text-align: center;
-  padding: 2px;
-  font: 12px sans-serif;
+  padding: 1%;
+  font-size: 90%;
+  line-height: 1.3em;
   background-color: white;
   color: black;
-  border: 0px;
   border-radius: 8px;
   pointer-events: none;
   opacity: 0;

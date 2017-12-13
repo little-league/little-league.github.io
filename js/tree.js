@@ -69,7 +69,7 @@ var TreeGraph = {
       nodeEnter.append("circle")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf"; })
           .attr("r", 1)
-          .style("fill", function(d) { return d._children ? "#aaa" : "#000"; });
+          .style("fill", function(d) { return d._children ? "#fff" : "#aaa"; });
 
       nodeEnter.append("text")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf" })
@@ -79,7 +79,9 @@ var TreeGraph = {
           .text(function(d) { return d.name; })
           .style("fill-opacity", 1e-6)
           .on('mouseenter', onMouseOver)
-          .on('mouseleave', onMouseLeave);
+          .on('mouseleave', onMouseLeave)
+          .on("mousemove", onMouseMove);
+
 
       // UGLY IMPLEMENTATION OF INFO BOX "I"
       nodeEnter.each(function(d) {
@@ -118,7 +120,7 @@ var TreeGraph = {
       nodeUpdate.select("circle")
           .attr("class", function(d) { return d.children || d._children ? "node--internal" : "node--leaf"; })
           .attr("r", function(d) { return d._children ? 7 : 5; })
-          .style("fill", function(d) { return d._children ? "#aaa" : "#000"; });
+          .style("fill", function(d) { return d._children ? "#fff" : "#aaa"; });
 
       nodeUpdate.select("text")
           .style("fill-opacity", 1);
@@ -199,8 +201,8 @@ var TreeGraph = {
         .style("opacity", .8);
 
       tooltip.html(text)
-        .style("left", d3.event.pageX + "px")
-        .style("top", d3.event.pageY + "px");
+        .style("left", d3.event.pageX+10 + "px")
+        .style("top", d3.event.pageY+10 + "px");
     }
 
     function onMouseLeave() {
@@ -208,6 +210,13 @@ var TreeGraph = {
       tooltip.transition()
         .duration(500)
         .style("opacity", 0);
+    }
+
+    function onMouseMove(){
+      var tooltip = d3.select('.tooltip');
+
+      tooltip.style("left", d3.event.pageX+10 + "px")
+             .style("top", d3.event.pageY+10 + "px");
     }
 
     function goToExerciseDescription(d) {
