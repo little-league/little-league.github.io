@@ -35,7 +35,6 @@ var PageTransitions = (function() {
 			options = {'animation':1, 'showPage': 1};
 			nextPage( options );
 			showSidebar(true);
-		  $('#pt-main').addClass('sidebar-shown');
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
@@ -43,7 +42,6 @@ var PageTransitions = (function() {
 				showTrainingButton();
 			else {
 				hideSidebar();
-			  $('#pt-main').removeClass('sidebar-shown');
   			$('#go-to-planning').css('display', 'none');
 			}
 

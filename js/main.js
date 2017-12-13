@@ -7,7 +7,6 @@ var listIndex = 0, homepage = true;
 function init() {
   homepage = true;
   hideSidebar();
-  $('#pt-main').removeClass('sidebar-shown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
 
@@ -18,18 +17,14 @@ function init() {
 
 function showBackButton() {
   showSidebar(true);
-  $('#pt-main').addClass('sidebar-shown');
-
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
-
   $('#go-to-planning').removeClass('right').addClass('left');
   $('#go-to-planning-icon').removeClass('icon-up').addClass('icon-left');
 }
 
 function showBackFromExercise() {
   showSidebar();
-  $('#pt-main').addClass('sidebar-shown');
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
 
@@ -39,18 +34,21 @@ function showBackFromExercise() {
 
 function showTrainingButton() {
   showSidebar();
-  $('#pt-main').addClass('sidebar-shown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'block');
 }
 
 function showSidebar(isLeft = false){
+  hideSidebar();
   var sidebar = $('#sidebar');
-  sidebar.css('display', 'block').removeClass('right').removeClass('left');
+  sidebar.css('display', 'block');
   isLeft ? sidebar.addClass('left') : sidebar.addClass('right')
+  isLeft ? $('#pt-main').addClass('sidebar-left') : $('#pt-main').addClass('sidebar-right');
 }
+
 function hideSidebar(){
   $('#sidebar').css('display', 'none').removeClass('right').removeClass('left');
+  $('#pt-main').removeClass('sidebar-left').removeClass('sidebar-right');
 }
 
 $('.logo-img').click(function() {
