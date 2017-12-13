@@ -6,8 +6,8 @@ var listIndex = 0, homepage = true;
 **************************************************/
 function init() {
   homepage = true;
-  $('#sidebar').css('display', 'none');
-  $('#pt-main').removeClass('sidebarShown');
+  hideSidebar();
+  $('#pt-main').removeClass('sidebar-shown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'none');
 
@@ -17,9 +17,8 @@ function init() {
 }
 
 function showBackButton() {
-  $('#sidebar').css('display', 'block');
-  $('#sidebar').removeClass('right').addClass('left');
-  $('#pt-main').addClass('sidebarShown');
+  showSidebar(true);
+  $('#pt-main').addClass('sidebar-shown');
 
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
@@ -29,8 +28,8 @@ function showBackButton() {
 }
 
 function showBackFromExercise() {
-  $('#sidebar').css('display', 'block');
-  $('#pt-main').addClass('sidebarShown');
+  showSidebar();
+  $('#pt-main').addClass('sidebar-shown');
   $('#go-to-planning').css('display', 'block');
   $('#go-to-training').css('display', 'none');
 
@@ -39,11 +38,19 @@ function showBackFromExercise() {
 }
 
 function showTrainingButton() {
-  $('#sidebar').css('display', 'block');
-  $('#pt-main').addClass('sidebarShown');
+  showSidebar();
+  $('#pt-main').addClass('sidebar-shown');
   $('#go-to-planning').css('display', 'none');
   $('#go-to-training').css('display', 'block');
-  $('#sidebar').removeClass('left').addClass('right');
+}
+
+function showSidebar(isLeft = false){
+  var sidebar = $('#sidebar');
+  sidebar.css('display', 'block').removeClass('right').removeClass('left');
+  isLeft ? sidebar.addClass('left') : sidebar.addClass('right')
+}
+function hideSidebar(){
+  $('#sidebar').css('display', 'none').removeClass('right').removeClass('left');
 }
 
 $('.logo-img').click(function() {

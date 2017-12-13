@@ -418,8 +418,11 @@ ul#search-results {
   -webkit-perspective: 1200px;
   -moz-perspective: 1200px;
   perspective: 1200px;
+  transition: all .2s ease-in-out;
 }
-
+.pt-perspective.sidebar-shown {
+  width: 85%;
+}
 .pt-page {
   width: 100%;
   height: 100%;

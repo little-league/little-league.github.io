@@ -34,16 +34,16 @@ var PageTransitions = (function() {
 
 			options = {'animation':1, 'showPage': 1};
 			nextPage( options );
-			$('#sidebar').removeClass('right').addClass('left').css('display', 'block');
-		  $('#pt-main').removeClass('sidebarShown');
+			showSidebar(true);
+		  $('#pt-main').addClass('sidebar-shown');
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
 			if(!homepage)
 				showTrainingButton();
 			else {
-				$('#sidebar').css('display', 'none');
-			  $('#pt-main').removeClass('sidebarShown');
+				hideSidebar();
+			  $('#pt-main').removeClass('sidebar-shown');
   			$('#go-to-planning').css('display', 'none');
 			}
 
