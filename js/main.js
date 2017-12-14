@@ -95,8 +95,9 @@ function searchElement(elmt) {
   $('#search-results').empty();
   for(var i = 0; i < relatedData.length; ++i) {
     var key = dataKeys[data.indexOf(relatedData[i])];
+    var group = key.replace(/[0-9]/g, '');
     $('#search-results').append(
-      $('<li>').append(
+      $('<li>').attr('data-group', group).append(
         $('<span>').attr('class', 'word').attr('data-id', key).text(relatedData[i])
       )
     )
