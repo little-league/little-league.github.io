@@ -56,6 +56,33 @@ $('.logo-img').click(function() {
 });
 
 /*************************************************
+* TRAINING LIST
+**************************************************/
+function updateTrainingList(data){
+  for (var key in data)
+    addListItem($('#trainings-list'), key, data[key]);
+    
+  $('.training').on('click', function(event) {
+    homepage = false;
+    createRadarData($(this).attr('data-id'));
+    drawRadarChart();
+    createRadarFilters($(this).attr('data-id'));
+
+    var options = {'animation':1, 'showPage': 1}
+    PageTransitions.nextPage( options );
+    showBackButton();
+  });
+}
+
+function addListItem(parent, link, text){
+  parent.append(
+    $('<li>').append(
+      $('<a>').attr('class', 'training').attr('data-id', link).text(text)
+    )
+  );
+}
+
+/*************************************************
 * SEARCH PAGE
 **************************************************/
 $('#searchbar').keypress(function(e) {
@@ -226,6 +253,8 @@ function createRadarFilters(dataId) {
         $('<input>').attr('type', 'checkbox').attr('class', 'filterbox').attr('data-id', relEx[i]).prop('checked', true)
       ).append(
         $('<span>').attr('class', 'filtertext').attr('data-id', relEx[i]).text(exercises[relEx[i]])
+      ).append(
+        $('<img>').attr('class', 'textinfo').attr('src', 'img/info_icon.png')
       )
     );
   }
@@ -240,6 +269,14 @@ function createRadarFilters(dataId) {
 
     // update radar chart depending on checked exercises
     drawRadarChart();
+  });
+
+  $('#training-filters-list li .textinfo').click(function() {
+    var exId = $(this).parent().children('.filtertext').attr('data-id');
+    createExercisePage(exId);
+    var options = {'animation':3, 'showPage': 2}
+    PageTransitions.nextPage( options );
+    showBackFromExercise();
   });
 }
 

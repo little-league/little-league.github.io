@@ -336,6 +336,12 @@ ul#search-results {
 #training-filters-list li {
   padding-left: 5%;
 }
+#training-filters-list li img {
+  margin-left: .3%;
+  position: absolute;
+  margin-top: .4%;
+  cursor: pointer;
+}
 .filterbox {
   margin: 0 5% 0 0;
   position: relative;
