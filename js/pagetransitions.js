@@ -3,6 +3,7 @@ var PageTransitions = (function() {
 	var $main = $( '#pt-main' ),
 		$pages = $main.children( 'div.pt-page' ),
 		$iterate = $( '#iterateEffects' ),
+		previous = 0,
 		animcursor = 1,
 		pagesCount = $pages.length,
 		current = 0,
@@ -38,14 +39,16 @@ var PageTransitions = (function() {
 		} );
 
 		$('#go-to-planning').on( 'click', function() {
-			if(!homepage)
+			if(previous == 0 && !homepage)
 				showTrainingButton();
+			else if(previous == 1)
+				showBackButton();
 			else {
 				hideSidebar();
-  			$('#go-to-planning').css('display', 'none');
+  				$('#go-to-planning').css('display', 'none');
 			}
 
-			options = {'animation':2, 'showPage': 0};
+			options = {'animation':2, 'showPage': previous == 2 ? 0 : previous};
 			if(current == 2)
 				options.animation = 4;
 
@@ -62,6 +65,7 @@ var PageTransitions = (function() {
 
 		isAnimating = true;
 
+		previous = current;
 		var $currPage = $pages.eq( current );
 		current = options.showPage;
 
