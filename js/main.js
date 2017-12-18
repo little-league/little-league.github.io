@@ -59,10 +59,13 @@ $('.logo-img').click(function() {
 * TRAINING LIST
 **************************************************/
 function updateTrainingList(data){
+  $('#trainings-list').empty();
+  
   for (var key in data)
     addListItem($('#trainings-list'), key, data[key]);
     
   $('.training').on('click', function(event) {
+    // populate radar chart
     createRadarData($(this).attr('data-id'));
     drawRadarChart();
     createRadarFilters($(this).attr('data-id'));
@@ -70,6 +73,12 @@ function updateTrainingList(data){
     var options = {'animation':1, 'showPage': 1}
     PageTransitions.nextPage( options );
     showBackButton();
+
+    // populate sidebar
+    populateSidebarFromTraining($(this).attr('data-id'));
+
+    //EDIT MODE
+    $('#training-name').val($(this).text());
   });
 }
 
@@ -352,6 +361,50 @@ function updateVideo(listId) {
 /*************************************************
 * SIDEBAR
 **************************************************/
+function populateSidebarFromTraining(trainingId) {
+  $('#selected-exercises').empty();
+  listIndex = 0;
+  
+  var relEx = rel_tr_ex[trainingId].split(',');
+
+  for(var i = 0; i < relEx.length; ++i) {
+    $('#selected-exercises').append(
+      $('<li>').attr('id', 'index' + listIndex++).append(
+        $('<img>').attr('class', 'deleteicon').attr('src', 'img/delete_icon.png')
+      ).append(
+        $('<span>').attr('class', 'exerciseList').attr('data-id', relEx[i]).text(exercises[relEx[i]])
+      )
+    );
+  }
+
+  $('.deleteicon').click(function() {
+    $(this).parent().remove();
+  });
+}
+// TODO: merge the 2 functions into 1 (still separated because of the way the params are saved... >.>)
+function populateSidebarFromSelection() {
+  $('#selected-exercises').empty();
+  listIndex = 0;
+
+  var keyId = Object.keys(selectedExList);
+
+  for(var i = 0; i < selectedExList.length; ++i) {
+    $('#selected-exercises').append(
+      $('<li>').attr('id', keyId[i]).append(
+        $('<img>').attr('class', 'deleteicon').attr('src', 'img/delete_icon.png')
+      ).append(
+        $('<span>').attr('class', 'exerciseList').attr('data-id', selectedExList[keyId[i]]).text(exercises[keyId[i]])
+      )
+    );
+  }
+
+  $('.deleteicon').click(function() {
+    $(this).parent().remove();
+    var parentId = $(this).parent().attr('id');
+    delete selectedExList[parentId];
+  });
+}
+
 function addToSelectedExercises(exId) {
   selectedExList['index' + listIndex] = exId;
 
@@ -367,21 +420,30 @@ function addToSelectedExercises(exId) {
     $(this).parent().remove();
     var parentId = $(this).parent().attr('id');
     delete selectedExList[parentId];
-  })
+  });
 }
 
 $('#saveBtn').click(function() {
   var sessionName = $('#training-name').val();
-  var id = 'tr' + (Object.keys(training).length + 1);
+  var savedValues = [];
+  var id = "";
+  if(Object.values(training).indexOf(sessionName) != -1 && homepage) {
+    id = Object.keys(training).find(key => training[key] === sessionName);
+    $('#selected-exercises li').each(function() {
+      savedValues.push($(this).children('.exerciseList').attr('data-id'));
+    });
+  } else {
+    id = 'tr' + (Object.keys(training).length + 1);
+    savedValues = Object.values(selectedExList);
+  }
 
-  if(Object.keys(selectedExList).length === 0)
+  if(savedValues.length === 0)
     return;
   if(sessionName === "") {
     alert('Please give a name to your session.');
     return;
   }
-
-  saveTrainingSession(id, sessionName, Object.values(selectedExList));
+  saveTrainingSession(id, sessionName, savedValues);
 });
 
 init();

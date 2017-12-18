@@ -45,6 +45,7 @@ var PageTransitions = (function() {
 				showBackButton();
 			else {
 				hideSidebar();
+				populateSidebarFromSelection();
   				$('#go-to-planning').css('display', 'none');
 			}
 

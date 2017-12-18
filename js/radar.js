@@ -166,7 +166,7 @@ var RadarChart = {
 
       var tooltip = d3.select('.tooltip');
       tooltip.transition()        
-        .duration(200)      
+        .duration(200)
         .style("opacity", .8);
 
       tooltip.html(text)
