@@ -31,7 +31,7 @@ var TreeGraph = {
               .ticks(5);
 
     var tooltip = d3.select(container).append("div")
-                    .attr("class", "tooltip");
+                    .attr("class", "tooltip tree-tooltip");
 
     root = data;
     root.x0 = height / 2;
@@ -194,7 +194,7 @@ var TreeGraph = {
         id = id.split('-')[1];
 
       var text = cognFuncDesc[id];
-      var tooltip = d3.select('.tooltip');
+      var tooltip = d3.select('.tree-tooltip');
 
       tooltip.transition()
         .duration(200)
@@ -206,14 +206,14 @@ var TreeGraph = {
     }
 
     function onMouseLeave() {
-      var tooltip = d3.select('.tooltip');
+      var tooltip = d3.select('.tree-tooltip');
       tooltip.transition()
         .duration(500)
         .style("opacity", 0);
     }
 
     function onMouseMove(){
-      var tooltip = d3.select('.tooltip');
+      var tooltip = d3.select('.tree-tooltip');
 
       tooltip.style("left", d3.event.pageX+10 + "px")
              .style("top", d3.event.pageY+10 + "px");

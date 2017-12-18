@@ -60,7 +60,7 @@ $('.logo-img').click(function() {
 **************************************************/
 function updateTrainingList(data){
   $('#trainings-list').empty();
-  
+
   for (var key in data)
     addListItem($('#trainings-list'), key, data[key]);
     
@@ -383,6 +383,8 @@ function populateSidebarFromTraining(trainingId) {
 }
 // TODO: merge the 2 functions into 1 (still separated because of the way the params are saved... >.>)
 function populateSidebarFromSelection() {
+  $('#training-name').val("");
+
   $('#selected-exercises').empty();
   listIndex = 0;
 

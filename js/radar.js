@@ -29,8 +29,9 @@ var RadarChart = {
      color: d3.scale.category10()
     };
 
-    var tooltip = d3.select(id).append("div")
-                    .attr("class", "tooltip");
+    if(d3.selectAll('.radar-tooltip')[0].length == 0)
+      var tooltip = d3.select(id).append("div")
+                    .attr("class", "tooltip radar-tooltip");
     
     if('undefined' !== typeof options){
       for(var i in options){
@@ -164,7 +165,7 @@ var RadarChart = {
       var id = Object.keys(cognFunc)[ind];
       var text = cognFuncDesc[id];
 
-      var tooltip = d3.select('.tooltip');
+      var tooltip = d3.select('.radar-tooltip');
       tooltip.transition()        
         .duration(200)
         .style("opacity", .8);
@@ -175,7 +176,7 @@ var RadarChart = {
     }
 
     function onMouseLeave() {
-      var tooltip = d3.select('.tooltip');
+      var tooltip = d3.select('.radar-tooltip');
       tooltip.transition()        
         .duration(500)
         .style("opacity", 0);
