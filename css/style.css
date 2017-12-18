@@ -284,7 +284,7 @@ ul#search-results {
  #treeCont {
   margin-top: -5%;
  }
-.node {
+.node .node--internal {
   cursor: pointer;
 }
 .node text {
@@ -309,7 +309,10 @@ ul#search-results {
   pointer-events: none;
   opacity: 0;
   word-wrap: break-word;
-  width: 200px;
+  max-width: 300px;
+}
+.node image {
+  cursor: pointer;
 }
 /************************************************
  * training section

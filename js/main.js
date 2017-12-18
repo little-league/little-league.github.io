@@ -315,7 +315,7 @@ function createExercisePage(exId) {
   - Pass success: 1TPjSpUkfgIpeiGEtoSlVkJ52LVrbK5aL
 */
 
-// data structure hardcoded for ex3 in db
+// data structure hardcoded for proof-of-concept
 var srclink = "https://drive.google.com/file/d/";
 var videos = [{
   'cf': [],
