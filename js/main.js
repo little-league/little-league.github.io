@@ -63,7 +63,6 @@ function updateTrainingList(data){
     addListItem($('#trainings-list'), key, data[key]);
     
   $('.training').on('click', function(event) {
-    homepage = false;
     createRadarData($(this).attr('data-id'));
     drawRadarChart();
     createRadarFilters($(this).attr('data-id'));
